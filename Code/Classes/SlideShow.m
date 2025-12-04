@@ -12,6 +12,7 @@
 #import "WindowMovingTextField.h"
 #import "ImageLoader.h"
 #import "MediaUtils.h"
+#import <AVFoundation/AVFoundation.h>
 #include <errno.h>
 
 @implementation SlideShow
@@ -138,9 +139,25 @@
 
             // Check if this is a video file
             if ([MediaUtils isVideoFile:path]) {
+                NSURL *videoURL = [NSURL fileURLWithPath:path];
+                AVAsset *asset = [AVAsset assetWithURL:videoURL];
+
+                // Synchronously check if video is playable
+                NSArray *keys = @[@"playable", @"tracks"];
+                NSError *error = nil;
+                for (NSString *key in keys) {
+                    [asset statusOfValueForKey:key error:&error];
+                }
+
+                // Skip videos that can't be played
+                if (![asset isPlayable] || [[asset tracksWithMediaType:AVMediaTypeVideo] count] == 0) {
+                    [myChosenFiles removeObjectAtIndex:myCurrentImageIndex--];
+                    continue;
+                }
+
                 myNextIsVideo = YES;
-                myNextVideoURL = [NSURL fileURLWithPath:path];
-                myNextImage = nil;  // No image for videos
+                myNextVideoURL = videoURL;
+                myNextImage = nil;
                 return;
             }
 
