@@ -168,13 +168,28 @@
 - (void)setVideoURL:(NSURL*)url {
     if (!url) return;
 
+    NSLog(@"Attempting to play video: %@", url.path);
+
     [self setupVideoPlayerIfNeeded];
 
     // Stop current video if any
     [self stopVideo];
 
-    // Create player and set it
+    // Create player item and player
     AVPlayerItem *playerItem = [AVPlayerItem playerItemWithURL:url];
+
+    // Observe player item status for errors
+    [playerItem addObserver:self
+                 forKeyPath:@"status"
+                    options:NSKeyValueObservingOptionNew
+                    context:nil];
+
+    // Observe for playback errors
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playerItemFailedToPlay:)
+                                                 name:AVPlayerItemFailedToPlayToEndTimeNotification
+                                               object:playerItem];
+
     videoPlayer = [AVPlayer playerWithPlayerItem:playerItem];
     videoPlayerView.player = videoPlayer;
 
@@ -195,6 +210,25 @@
     [self display];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+                       context:(void *)context {
+    if ([keyPath isEqualToString:@"status"]) {
+        AVPlayerItem *item = (AVPlayerItem *)object;
+        if (item.status == AVPlayerItemStatusFailed) {
+            NSLog(@"Video failed to load: %@", item.error.localizedDescription);
+        } else if (item.status == AVPlayerItemStatusReadyToPlay) {
+            NSLog(@"Video ready to play");
+        }
+    }
+}
+
+- (void)playerItemFailedToPlay:(NSNotification *)notification {
+    NSError *error = notification.userInfo[AVPlayerItemFailedToPlayToEndTimeErrorKey];
+    NSLog(@"Video playback failed: %@", error.localizedDescription);
+}
+
 - (void)videoDidEnd:(NSNotification *)notification {
     // Loop the video
     AVPlayerItem *item = notification.object;
@@ -204,10 +238,24 @@
 
 - (void)stopVideo {
     if (videoPlayer) {
+        AVPlayerItem *currentItem = videoPlayer.currentItem;
         [videoPlayer pause];
-        [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                        name:AVPlayerItemDidPlayToEndTimeNotification
-                                                      object:videoPlayer.currentItem];
+
+        // Remove all observers
+        if (currentItem) {
+            @try {
+                [currentItem removeObserver:self forKeyPath:@"status"];
+            } @catch (NSException *exception) {
+                // Observer wasn't registered, ignore
+            }
+            [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                            name:AVPlayerItemDidPlayToEndTimeNotification
+                                                          object:currentItem];
+            [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                            name:AVPlayerItemFailedToPlayToEndTimeNotification
+                                                          object:currentItem];
+        }
+
         videoPlayer = nil;
         videoPlayerView.player = nil;
     }
