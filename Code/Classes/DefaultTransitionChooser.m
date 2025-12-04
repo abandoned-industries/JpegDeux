@@ -30,7 +30,8 @@ static NSMutableDictionary* sTransitionViews;
     result=[sTransitionViews objectForKey:[self nibName]];
     if (! result) {
         result=[[self alloc] init];
-        if (! [NSBundle loadNibNamed:[self nibName] owner:result]) {
+        NSArray *topLevelObjects = nil;
+        if (! [[NSBundle mainBundle] loadNibNamed:[self nibName] owner:result topLevelObjects:&topLevelObjects]) {
             NSAlert *alert = [[NSAlert alloc] init];
             alert.messageText = @"Nib error";
             alert.informativeText = [NSString stringWithFormat:@"JPEGDeux couldn't load %@.nib", [self nibName]];

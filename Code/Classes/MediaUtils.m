@@ -7,6 +7,7 @@
 
 #import "MediaUtils.h"
 #import <AVFoundation/AVFoundation.h>
+#import <CoreServices/CoreServices.h>
 
 @implementation MediaUtils
 
