@@ -39,7 +39,6 @@
 		93A31A68171A40A400528ABE /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 93A31A5E171A40A400528ABE /* MainMenu.nib */; };
 		93A31A69171A40A400528ABE /* Preload.nib in Resources */ = {isa = PBXBuildFile; fileRef = 93A31A60171A40A400528ABE /* Preload.nib */; };
 		93A31A6A171A40A400528ABE /* ScreenShowTransitionView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 93A31A62171A40A400528ABE /* ScreenShowTransitionView.nib */; };
-		93DE311B17CA7F3F00F94034 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DE311A17CA7F3F00F94034 /* ApplicationServices.framework */; };
 		93E45F2914638C2A00C5C55B /* trash.aiff in Resources */ = {isa = PBXBuildFile; fileRef = F56A1BE40200B2A801FDC0B7 /* trash.aiff */; };
 		93E45F2A14638C2A00C5C55B /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = F5ECB42E014737C601000001 /* Credits.rtf */; };
 		93E45F2B14638C2A00C5C55B /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = F5B329870200F21501FDC0B7 /* license.txt */; };
@@ -95,7 +94,6 @@
 		93A31A5F171A40A400528ABE /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = JPEGDeux/en.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		93A31A61171A40A400528ABE /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = JPEGDeux/en.lproj/Preload.nib; sourceTree = "<group>"; };
 		93A31A63171A40A400528ABE /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = JPEGDeux/en.lproj/ScreenShowTransitionView.nib; sourceTree = "<group>"; };
-		93DE311A17CA7F3F00F94034 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/ApplicationServices.framework; sourceTree = DEVELOPER_DIR; };
 		93E45F0C14638A3000C5C55B /* JPEGDeux.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JPEGDeux.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93E45F1014638A3000C5C55B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		93E45F1114638A3000C5C55B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -112,7 +110,6 @@
 		F512116D02DBECC4012CC1D9 /* MasterOutlineStuff.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterOutlineStuff.m; sourceTree = "<group>"; };
 		F512116E02DBECC4012CC1D9 /* MasterOutlineStuff.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterOutlineStuff.h; sourceTree = "<group>"; };
 		F521B07202ED27D101F32A68 /* Scaling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scaling.h; sourceTree = "<group>"; };
-		F5262E4702CECA940186C364 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		F52D57E602CFCC5401CCFEE7 /* PrefsManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrefsManager.m; sourceTree = "<group>"; };
 		F52D57E702CFCC5401CCFEE7 /* PrefsManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefsManager.h; sourceTree = "<group>"; };
 		F52D57EE02D035A401CCFEE7 /* KeyBindingTable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyBindingTable.m; sourceTree = "<group>"; };
@@ -154,7 +151,6 @@
 		F5B3296B0200F14901FDC0B7 /* StringAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringAdditions.h; sourceTree = "<group>"; };
 		F5B3296C0200F14901FDC0B7 /* StringAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StringAdditions.m; sourceTree = "<group>"; };
 		F5B329870200F21501FDC0B7 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
-		F5C4771C014870FD01000001 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		F5E53AA2038B5BCE01FD9FBC /* CommentFinder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentFinder.h; sourceTree = "<group>"; };
 		F5E53AA3038B5BCE01FD9FBC /* CommentFinder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentFinder.m; sourceTree = "<group>"; };
 		F5E53CF7038BA75901FD9FBC /* WindowMovingTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WindowMovingTextField.h; sourceTree = "<group>"; };
@@ -167,7 +163,6 @@
 		F5F05AF6038F84FE01FD9FBC /* DataAlias.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataAlias.h; sourceTree = "<group>"; };
 		F5F05AF7038F84FE01FD9FBC /* DataAlias.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataAlias.m; sourceTree = "<group>"; };
 		F5F34E5B0145C0BD01000001 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
-		F5F34E5D0145C6EF01000001 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,7 +170,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				93DE311B17CA7F3F00F94034 /* ApplicationServices.framework in Frameworks */,
 				930E803417247A9C00291667 /* Quartz.framework in Frameworks */,
 				930E803517247A9C00291667 /* QuartzCore.framework in Frameworks */,
 				930E880817247A9C00291668 /* ImageIO.framework in Frameworks */,
@@ -202,7 +196,6 @@
 		29B97314FDCFA39411CA2CEA /* JPEGShow */ = {
 			isa = PBXGroup;
 			children = (
-				93DE311A17CA7F3F00F94034 /* ApplicationServices.framework */,
 				930E803217247A9C00291667 /* Quartz.framework */,
 				930E803317247A9C00291667 /* QuartzCore.framework */,
 				9396590A171A356F00286CB9 /* Cocoa.framework */,
@@ -240,11 +233,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F5262E4702CECA940186C364 /* QuickTime.framework */,
 				F5F34E5B0145C0BD01000001 /* CoreFoundation.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
-				F5C4771C014870FD01000001 /* Carbon.framework */,
-				F5F34E5D0145C6EF01000001 /* ApplicationServices.framework */,
 				930E880717247A9C00291668 /* ImageIO.framework */,
 				930E880A17247A9C00291669 /* AVKit.framework */,
 				930E880E17247A9C00291669 /* AVFoundation.framework */,
