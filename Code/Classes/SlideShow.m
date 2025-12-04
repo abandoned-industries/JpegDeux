@@ -319,7 +319,6 @@
     NSAssert(progress!=nil, @"Couldn't find progress indicator in Preload window");
     [progress setMinValue:0];
     [progress setMaxValue:max];
-    [progressWindow useOptimizedDrawing:YES];
     [progressWindow center];
     [progressWindow makeKeyAndOrderFront:self];
     NS_DURING

@@ -50,7 +50,6 @@
                                                  styleMask:NSWindowStyleMaskBorderless
                                                    backing:NSBackingStoreBuffered
                                                      defer:NO];
-    [myOtherCoveringWindow useOptimizedDrawing:YES];
     myOtherImageView=[[BackgroundImageView alloc] initWithFrame:[myOtherCoveringWindow frame]];
     [myOtherImageView setColor:[NSColor blackColor]];
     [myOtherImageView setImageScaling:myScaling];

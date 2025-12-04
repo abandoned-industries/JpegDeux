@@ -15,7 +15,6 @@
                                styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskResizable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskClosable
                                backing:NSBackingStoreBuffered
                                defer:NO];
-    [myWindow useOptimizedDrawing:YES];
     myImageView=[[BackgroundImageView alloc] initWithFrame:NSMakeRect(0, 0, 600, 350)];
     [myImageView setFrame:[myWindow frame]];
     [myImageView setImageScaling:myScaling];
@@ -81,9 +80,9 @@
     NSEvent* event=[NSEvent otherEventWithType:NSEventTypeApplicationDefined
                             location:NSMakePoint(0,0)
                             modifierFlags:0
-                            timestamp:0 /* This is supposed to be the time since system startup; how do we get that?? */
+                            timestamp:0
                             windowNumber:[window windowNumber]
-                            context:[NSGraphicsContext currentContext]
+                            context:nil
                             subtype:StopSlideshowEventType
                             data1:0
                             data2:0];

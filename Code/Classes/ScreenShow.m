@@ -29,7 +29,6 @@
                        styleMask:NSWindowStyleMaskBorderless
                        backing:NSBackingStoreBuffered
                        defer:NO];
-    [myCoveringWindow useOptimizedDrawing:YES];
     myImageView=[[BackgroundImageView alloc] initWithFrame:[myCoveringWindow frame]];
     //myImageView=[[TransitionImageView alloc] initWithFrame:[myCoveringWindow frame]];
     [myImageView setColor:[NSColor blackColor]];
