@@ -9,7 +9,7 @@
 #import "FileHierarchySupport.h"
 #import "StringAdditions.h"
 #import "DataAlias.h"
-#import <AVFoundation/AVFoundation.h>
+#import "MediaUtils.h"
 
 static void flattenHierarchy(id hierarchy, NSMutableArray* array) {
     if (! [hierarchy isFolder]) [array addObject:hierarchy];
@@ -70,18 +70,8 @@ static void flattenHierarchy(id hierarchy, NSMutableArray* array) {
             [result setContents:hierarchyContents];
         } else {
             result=[path resolveAliasesIsDir:nil];
-            CFStringRef fileExtension = (__bridge CFStringRef)[result pathExtension];
-            CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
-
-            // Accept both images and videos
-            BOOL isImage = UTTypeConformsTo(fileUTI, kUTTypeImage);
-            BOOL isVideo = UTTypeConformsTo(fileUTI, kUTTypeMovie) || UTTypeConformsTo(fileUTI, kUTTypeVideo);
-
-            if (fileUTI) {
-                CFRelease(fileUTI);
-            }
-
-            if (!isImage && !isVideo) {
+            // Use MediaUtils for comprehensive image and video detection
+            if (![MediaUtils isMediaFile:result]) {
                 result=nil;
             }
         } 
