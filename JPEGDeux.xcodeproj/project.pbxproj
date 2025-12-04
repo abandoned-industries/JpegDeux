@@ -37,7 +37,7 @@
 		93A31A65171A40A400528ABE /* ImageWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = 93A31A58171A40A400528ABE /* ImageWindow.nib */; };
 		93A31A66171A40A400528ABE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93A31A5A171A40A400528ABE /* InfoPlist.strings */; };
 		93A31A67171A40A400528ABE /* InternetImages.nib in Resources */ = {isa = PBXBuildFile; fileRef = 93A31A5C171A40A400528ABE /* InternetImages.nib */; };
-		93A31A68171A40A400528ABE /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 93A31A5E171A40A400528ABE /* MainMenu.nib */; };
+		93A31A68171A40A400528ABE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A31A5E171A40A400528ABE /* MainMenu.xib */; };
 		93A31A69171A40A400528ABE /* Preload.nib in Resources */ = {isa = PBXBuildFile; fileRef = 93A31A60171A40A400528ABE /* Preload.nib */; };
 		93A31A6A171A40A400528ABE /* ScreenShowTransitionView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 93A31A62171A40A400528ABE /* ScreenShowTransitionView.nib */; };
 		93E45F2914638C2A00C5C55B /* trash.aiff in Resources */ = {isa = PBXBuildFile; fileRef = F56A1BE40200B2A801FDC0B7 /* trash.aiff */; };
@@ -93,7 +93,7 @@
 		93A31A59171A40A400528ABE /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = JPEGDeux/en.lproj/ImageWindow.nib; sourceTree = "<group>"; };
 		93A31A5B171A40A400528ABE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = JPEGDeux/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		93A31A5D171A40A400528ABE /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = JPEGDeux/en.lproj/InternetImages.nib; sourceTree = "<group>"; };
-		93A31A5F171A40A400528ABE /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = JPEGDeux/en.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		93A31A5F171A40A400528ABE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = JPEGDeux/en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		93A31A61171A40A400528ABE /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = JPEGDeux/en.lproj/Preload.nib; sourceTree = "<group>"; };
 		93A31A63171A40A400528ABE /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = JPEGDeux/en.lproj/ScreenShowTransitionView.nib; sourceTree = "<group>"; };
 		93E45F0C14638A3000C5C55B /* JPEGDeux.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JPEGDeux.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -221,7 +221,7 @@
 				93A31A58171A40A400528ABE /* ImageWindow.nib */,
 				93A31A5A171A40A400528ABE /* InfoPlist.strings */,
 				93A31A5C171A40A400528ABE /* InternetImages.nib */,
-				93A31A5E171A40A400528ABE /* MainMenu.nib */,
+				93A31A5E171A40A400528ABE /* MainMenu.xib */,
 				93A31A60171A40A400528ABE /* Preload.nib */,
 				93A31A62171A40A400528ABE /* ScreenShowTransitionView.nib */,
 				F56A1BE40200B2A801FDC0B7 /* trash.aiff */,
@@ -434,7 +434,7 @@
 				93A31A65171A40A400528ABE /* ImageWindow.nib in Resources */,
 				93A31A66171A40A400528ABE /* InfoPlist.strings in Resources */,
 				93A31A67171A40A400528ABE /* InternetImages.nib in Resources */,
-				93A31A68171A40A400528ABE /* MainMenu.nib in Resources */,
+				93A31A68171A40A400528ABE /* MainMenu.xib in Resources */,
 				93A31A69171A40A400528ABE /* Preload.nib in Resources */,
 				93A31A6A171A40A400528ABE /* ScreenShowTransitionView.nib in Resources */,
 			);
@@ -527,12 +527,12 @@
 			name = InternetImages.nib;
 			sourceTree = "<group>";
 		};
-		93A31A5E171A40A400528ABE /* MainMenu.nib */ = {
+		93A31A5E171A40A400528ABE /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				93A31A5F171A40A400528ABE /* en */,
 			);
-			name = MainMenu.nib;
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 		93A31A60171A40A400528ABE /* Preload.nib */ = {
