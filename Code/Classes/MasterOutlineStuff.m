@@ -174,12 +174,12 @@
 - (void)redoPreviewImageName {
     NSString* name=nil;
     NSInteger row;
-    if (myFileNameDisplay != none) {
+    if (myFileNameDisplay != FileNameDisplayNone) {
         row=[myFilesTable selectedRow];
         if (row != -1) {
             id hierarchy=[myFilesTable itemAtRow:row];
             if (hierarchy!=nil && ![hierarchy isFolder]) {
-                if (myFileNameDisplay==path) name=hierarchy;
+                if (myFileNameDisplay==FileNameDisplayPath) name=hierarchy;
                 else name=[hierarchy lastPathComponent];
             }
         }

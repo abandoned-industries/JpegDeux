@@ -13,7 +13,7 @@
 - (id)initWithFrame:(NSRect)frame {
     if (self=[super initWithFrame:frame]) {
         myBackgroundColor=[NSColor blackColor];
-        myScaling=NSScaleNone;
+        myScaling=ScaleNone;
         myNameAttributes=[[NSDictionary alloc] initWithObjectsAndKeys:
             [NSColor whiteColor], NSForegroundColorAttributeName,
             [NSColor blackColor], NSBackgroundColorAttributeName,
@@ -53,14 +53,14 @@
         case ScaleDownToFit:
             if (size.height < mySize.height && size.width < mySize.width) return size;
             //note fall through
-        case NSScaleToFit: return mySize;
+        case ScaleToFit: return mySize;
 
-        case NSScaleNone: return size;
+        case ScaleNone: return size;
 
         case ScaleDownProportionally:
             if (size.height < mySize.height && size.width < mySize.width) return size;
             //note fall through
-        case NSScaleProportionally:
+        case ScaleProportionally:
             if (size.height*mySize.width > size.width * mySize.height) {
                 //image is too tall
                 size.width*=mySize.height/size.height;

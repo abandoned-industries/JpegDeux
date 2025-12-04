@@ -2,26 +2,27 @@
 
 #define PETERSTYPES
 
-//the first of these three are compatible with NSImageScaling
+#import <Foundation/Foundation.h>
 
-typedef enum {
+// Image scaling options - compatible with NSImageScaling for first three values
+typedef NS_ENUM(NSInteger, BetterImageScaling) {
     ScaleProportionally = 0,   // Fit proportionally
     ScaleToFit,                // Forced fit (distort if necessary)
     ScaleNone,                 // Don't scale (clip)
     ScaleDownProportionally,   // Only scale down proportionally
-    ScaleDownToFit	       // Only scale down to fit
-} BetterImageScaling;
+    ScaleDownToFit             // Only scale down to fit
+};
 
-typedef enum {
-    none=0,
-    name,
-    path
-} FileNameDisplay;
+typedef NS_ENUM(NSInteger, FileNameDisplay) {
+    FileNameDisplayNone = 0,
+    FileNameDisplayName,
+    FileNameDisplayPath
+};
 
-typedef enum {
-    noComment=0,
-    windowComment,
-} CommentStyle_t;
+typedef NS_ENUM(NSInteger, CommentStyle) {
+    CommentStyleNone = 0,
+    CommentStyleWindow
+};
 
 extern const short StopSlideshowEventType;
 

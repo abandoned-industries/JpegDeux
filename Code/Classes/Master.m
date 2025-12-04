@@ -416,8 +416,8 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     myCurrentShow=[[myDisplayModeClass alloc] initWithParams:[myTransitionChooser valueDictionary]];
     NS_DURING
 	
-    if (myShouldOnlyScaleDown && myScaling==NSScaleProportionally) [myCurrentShow setImageScaling:ScaleDownProportionally];
-    else if (myShouldOnlyScaleDown && myScaling==NSScaleToFit) [myCurrentShow setImageScaling:ScaleDownToFit];
+    if (myShouldOnlyScaleDown && myScaling==ScaleProportionally) [myCurrentShow setImageScaling:ScaleDownProportionally];
+    else if (myShouldOnlyScaleDown && myScaling==ScaleToFit) [myCurrentShow setImageScaling:ScaleDownToFit];
     else [myCurrentShow setImageScaling:myScaling];
     [myCurrentShow setCommentStyle:myCommentDisplay];
     [myCurrentShow setFileNameDisplayType:myFileNameDisplay];

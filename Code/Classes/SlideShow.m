@@ -21,7 +21,7 @@
 - (void)beginShow:(NSArray*)files {
     const unsigned int styleMask=NSWindowStyleMaskBorderless;
     myChosenFiles=[files mutableCopy];
-    if (myCommentStyle==windowComment) {
+    if (myCommentStyle==CommentStyleWindow) {
         myCommentWindow=[[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 6, 6)
                                                     styleMask:styleMask
                                                       backing:NSBackingStoreBuffered
@@ -82,13 +82,13 @@
     if (myNextImage==nil) {
         return NO;
     }
-    if (myFileNameDisplay==path) {
+    if (myFileNameDisplay==FileNameDisplayPath) {
 		[self setImageName:[myChosenFiles objectAtIndex:myCurrentImageIndex]];
-	} else if (myFileNameDisplay==name) {
+	} else if (myFileNameDisplay==FileNameDisplayName) {
 		[self setImageName:[[myChosenFiles objectAtIndex:myCurrentImageIndex] lastPathComponent]];
 	}
     [self setImage:myNextImage];
-    if (myCommentStyle==windowComment) [self updateWindowComments];
+    if (myCommentStyle==CommentStyleWindow) [self updateWindowComments];
     *timeOfDisplay=CFAbsoluteTimeGetCurrent();
     if (++myCurrentImageIndex >= [myChosenFiles count]) return NO;
     [self loadNextImage];
@@ -187,7 +187,7 @@
     return 0;
 }
 
-- (void)setCommentStyle:(CommentStyle_t)style {
+- (void)setCommentStyle:(CommentStyle)style {
     myCommentStyle=style;
 }
 

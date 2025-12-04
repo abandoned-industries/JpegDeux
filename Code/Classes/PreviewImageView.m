@@ -28,11 +28,11 @@
                     if (!(NSHeight(imageRect) < NSHeight(rect) || NSWidth(imageRect) < NSWidth(rect)))
                         goto LabelScaleNone;
                     //note the fall through
-                case NSScaleToFit:
+                case ScaleToFit:
                     break;
 
                     LabelScaleNone:
-                case NSScaleNone: {
+                case ScaleNone: {
                     float xSpace=(NSWidth(rect) - NSWidth(imageRect))/2.0;
                     float ySpace=(NSHeight(rect) - NSHeight(imageRect))/2.0;
                     if (xSpace < 0 && ySpace >= 0) { //space on bottom and top, not sides
@@ -54,7 +54,7 @@
                 case ScaleDownProportionally:
                     if (NSHeight(imageRect) < NSHeight(rect) && NSWidth(imageRect) < NSWidth(rect)) goto LabelScaleNone;
                     //note the fall through
-                case NSScaleProportionally:
+                case ScaleProportionally:
                     if (NSHeight(imageRect)*NSWidth(rect) > NSHeight(rect)*NSWidth(imageRect)) {
                         //image is tall
                         float scalingFactor=NSHeight(rect)/NSHeight(imageRect);

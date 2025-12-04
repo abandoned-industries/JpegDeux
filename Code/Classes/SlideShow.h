@@ -15,7 +15,7 @@
     BOOL myDontShowComment;
     NSWindow* myCommentWindow;
     NSTextField* myCommentField;
-    CommentStyle_t myCommentStyle;
+    CommentStyle myCommentStyle;
     NSMutableArray* myChosenFiles;
     int myCurrentImageIndex;
     NSImage* myNextImage;
@@ -45,7 +45,7 @@
 - (void)setImageScaling:(BetterImageScaling)scaling;
 - (BetterImageScaling)imageScaling;
 
-- (void)setCommentStyle:(CommentStyle_t)style;
+- (void)setCommentStyle:(CommentStyle)style;
 
 - (void)setFileNameDisplayType:(FileNameDisplay)displayType;
 
