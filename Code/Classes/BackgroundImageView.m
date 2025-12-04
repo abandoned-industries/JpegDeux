@@ -18,10 +18,12 @@
             [NSColor whiteColor], NSForegroundColorAttributeName,
             [NSColor blackColor], NSBackgroundColorAttributeName,
             nil];
-		
-		imageView = [[NSImageView alloc] initWithFrame:frame];
+
+		imageView = [[NSImageView alloc] initWithFrame:self.bounds];
+		imageView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+		imageView.imageScaling = NSImageScaleProportionallyUpOrDown;
 		[self addSubview:imageView];
-		
+
     }
     return self;
 }
@@ -134,6 +136,26 @@
 
 - (void)setImageScaling:(BetterImageScaling)scaling {
     myScaling=scaling;
+
+    // Map BetterImageScaling to NSImageScaling for the imageView
+    switch (scaling) {
+        case ScaleProportionally:
+            imageView.imageScaling = NSImageScaleProportionallyUpOrDown;
+            break;
+        case ScaleToFit:
+            imageView.imageScaling = NSImageScaleAxesIndependently;
+            break;
+        case ScaleNone:
+            imageView.imageScaling = NSImageScaleNone;
+            break;
+        case ScaleDownProportionally:
+        case ScaleDownToFit:
+            imageView.imageScaling = NSImageScaleProportionallyDown;
+            break;
+        default:
+            imageView.imageScaling = NSImageScaleProportionallyUpOrDown;
+            break;
+    }
 }
 
 - (BetterImageScaling)imageScaling {
