@@ -205,7 +205,8 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     [panel setCanChooseFiles:YES];
 	
 	[panel setDirectoryURL:[[NSURL alloc] initWithString:startingDirectory]];
-	[panel setAllowedFileTypes:[NSImage imageFileTypes]];
+	// Use modern imageTypes (UTIs) instead of deprecated imageFileTypes
+	[panel setAllowedFileTypes:[NSImage imageTypes]];
 	[panel beginSheetModalForWindow:[myFilesTable window] completionHandler:^(NSInteger returnCode)
 	{
 		[self openPanelDidEnd:panel returnCode:returnCode contextInfo:NULL];
@@ -425,7 +426,10 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     [myCurrentShow setBackgroundColor:myBackgroundColor];
     if (myShouldPrecache) {
 		[(id)myCurrentShow preload];
-	}
+	} else {
+        // Use smart caching - preloads a few images ahead in background
+        [myCurrentShow enableSmartCache];
+    }
     NS_HANDLER
         myCurrentShow=nil;
         myChosenFiles=nil;

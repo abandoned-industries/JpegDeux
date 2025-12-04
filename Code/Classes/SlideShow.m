@@ -10,6 +10,7 @@
 #import "MyWindowController.h"
 #import "CommentFinder.h"
 #import "WindowMovingTextField.h"
+#import "ImageLoader.h"
 #include <errno.h>
 
 @implementation SlideShow
@@ -97,25 +98,37 @@
 
 - (void)loadNextImage {
     myFileComments=nil;
+
+    // If using smart cache, try to get from cache first
+    if (myUseSmartCache && myImageCache) {
+        NSImage *cachedImage = [self cachedImageAtIndex:myCurrentImageIndex];
+        if (cachedImage) {
+            myNextImage = cachedImage;
+            if (myCommentStyle) {
+                NSString* path = [myChosenFiles objectAtIndex:myCurrentImageIndex];
+                myFileComments = [commentsForJPEGFile(path) componentsJoinedByString:@"\n"];
+                if (![myFileComments length]) myFileComments = nil;
+            }
+            // Trigger preloading of nearby images
+            [self preloadNearbyImages];
+            return;
+        }
+    }
+
     if (myCachedImages==nil) {
         const NSSize zeroSize={0,0};
         do {
             NSString* path=[myChosenFiles objectAtIndex:myCurrentImageIndex];
-            if ([path hasPrefix:@"http://"]) {
+            if ([path hasPrefix:@"http://"] || [path hasPrefix:@"https://"]) {
                 NSURL* url=[NSURL URLWithString:path];
                 if (url) {
 					myNextImage=[[NSImage alloc] initWithContentsOfURL:url];
-					/*if (url) {
-						NSURLHandle* handle=[[[[NSURLHandle URLHandleClassForURL:url] alloc] initWithURL:url cached:YES] autorelease];
-						NSData* data=[handle resourceData];
-						myNextImage=[[NSImage alloc] initWithData:data];
-					}*/
 				} else {
 					myNextImage=nil;
 				}
-                //NSLog(@"\nPath:\t%@\nURL:\t%@\nImage:\t%@", path, url, myNextImage);
             } else {
-				myNextImage=[[NSImage alloc] initWithContentsOfFile:path];
+                // Use ImageLoader for more efficient local file loading
+				myNextImage=[ImageLoader imageForPath:path];
 			}
             if (myNextImage==nil) {
                 [myChosenFiles removeObjectAtIndex:myCurrentImageIndex--];
@@ -129,7 +142,12 @@
                 myFileComments=[commentsForJPEGFile(path) componentsJoinedByString:@"\n"];
                 if (! [myFileComments length]) myFileComments=nil;
             }
-            //[myNextImage setDataRetained:YES];
+
+            // Store in smart cache and trigger preloading
+            if (myUseSmartCache && myImageCache) {
+                [myImageCache setObject:myNextImage forKey:@(myCurrentImageIndex)];
+                [self preloadNearbyImages];
+            }
             return;
         } while (++myCurrentImageIndex < [myChosenFiles count]);
         myNextImage=nil;
@@ -324,6 +342,75 @@
 
 - (long)estimatedSizeOfCachedImages {
     return 0;
+}
+
+#pragma mark - Smart Caching
+
+- (void)enableSmartCache {
+    myUseSmartCache = YES;
+    if (!myImageCache) {
+        myImageCache = [[NSCache alloc] init];
+        // Keep a reasonable number of images in cache
+        [myImageCache setCountLimit:PRELOAD_AHEAD + PRELOAD_BEHIND + 2];
+    }
+}
+
+- (void)preloadNearbyImages {
+    if (!myUseSmartCache || !myChosenFiles || [myChosenFiles count] == 0) {
+        return;
+    }
+
+    NSInteger currentIndex = myCurrentImageIndex;
+    NSInteger totalFiles = [myChosenFiles count];
+
+    // Preload images ahead
+    for (NSInteger i = 1; i <= PRELOAD_AHEAD; i++) {
+        NSInteger indexToLoad = currentIndex + i;
+        if (indexToLoad < totalFiles) {
+            NSString *path = [myChosenFiles objectAtIndex:indexToLoad];
+            NSNumber *key = @(indexToLoad);
+
+            // Skip if already cached
+            if ([myImageCache objectForKey:key]) {
+                continue;
+            }
+
+            // Load asynchronously
+            [ImageLoader imageForPath:path completion:^(NSImage *image) {
+                if (image) {
+                    [self->myImageCache setObject:image forKey:key];
+                }
+            }];
+        }
+    }
+
+    // Preload images behind (for going back)
+    for (NSInteger i = 1; i <= PRELOAD_BEHIND; i++) {
+        NSInteger indexToLoad = currentIndex - i;
+        if (indexToLoad >= 0) {
+            NSString *path = [myChosenFiles objectAtIndex:indexToLoad];
+            NSNumber *key = @(indexToLoad);
+
+            // Skip if already cached
+            if ([myImageCache objectForKey:key]) {
+                continue;
+            }
+
+            // Load asynchronously
+            [ImageLoader imageForPath:path completion:^(NSImage *image) {
+                if (image) {
+                    [self->myImageCache setObject:image forKey:key];
+                }
+            }];
+        }
+    }
+}
+
+- (NSImage *)cachedImageAtIndex:(NSInteger)index {
+    if (!myUseSmartCache || !myImageCache) {
+        return nil;
+    }
+    return [myImageCache objectForKey:@(index)];
 }
 
 @end

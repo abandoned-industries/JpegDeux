@@ -11,6 +11,10 @@
 //JPEGDeux will warn at this number of MB for precacheing
 #define WARNING_LEVEL 75.
 
+// Number of images to preload ahead/behind current position
+#define PRELOAD_AHEAD 3
+#define PRELOAD_BEHIND 1
+
 @interface SlideShow : NSObject {
     BOOL myDontShowComment;
     NSWindow* myCommentWindow;
@@ -25,6 +29,10 @@
     FileNameDisplay myFileNameDisplay;
     float myRotation;
     NSString* myFileComments;
+
+    // Sliding window cache for efficient memory usage
+    NSCache* myImageCache;
+    BOOL myUseSmartCache;
 }
 
 //currently recognized params: FadeTransition => NSValue of should fade
@@ -64,5 +72,9 @@
 
 - (void)preload;
 
+// Smart caching - preloads next few images in background instead of all at once
+- (void)enableSmartCache;
+- (void)preloadNearbyImages;
+- (NSImage *)cachedImageAtIndex:(NSInteger)index;
 
 @end
