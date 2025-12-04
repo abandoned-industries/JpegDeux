@@ -132,16 +132,90 @@
 }
 
 - (void)setImage:(NSImage*)image {
+    // Stop any playing video first
+    [self stopVideo];
 
     myImage=image;
-	
+    isShowingVideo = NO;
+
+    // Show image view, hide video view
+    [imageView setHidden:NO];
+    [videoPlayerView setHidden:YES];
+
 	[imageView setImage:myImage];
-	
+
     [self display];
 }
 
 - (NSImage*)image {
     return myImage;
+}
+
+#pragma mark - Video Support
+
+- (void)setupVideoPlayerIfNeeded {
+    if (!videoPlayerView) {
+        videoPlayerView = [[AVPlayerView alloc] initWithFrame:self.bounds];
+        videoPlayerView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+        videoPlayerView.controlsStyle = AVPlayerViewControlsStyleNone;
+        videoPlayerView.videoGravity = AVLayerVideoGravityResizeAspect;
+        [videoPlayerView setWantsLayer:YES];
+        [self addSubview:videoPlayerView];
+        [videoPlayerView setHidden:YES];
+    }
+}
+
+- (void)setVideoURL:(NSURL*)url {
+    if (!url) return;
+
+    [self setupVideoPlayerIfNeeded];
+
+    // Stop current video if any
+    [self stopVideo];
+
+    // Create player and set it
+    AVPlayerItem *playerItem = [AVPlayerItem playerItemWithURL:url];
+    videoPlayer = [AVPlayer playerWithPlayerItem:playerItem];
+    videoPlayerView.player = videoPlayer;
+
+    // Hide image view, show video view
+    [imageView setHidden:YES];
+    [videoPlayerView setHidden:NO];
+    isShowingVideo = YES;
+
+    // Start playing
+    [videoPlayer play];
+
+    // Loop video when it ends
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(videoDidEnd:)
+                                                 name:AVPlayerItemDidPlayToEndTimeNotification
+                                               object:playerItem];
+
+    [self display];
+}
+
+- (void)videoDidEnd:(NSNotification *)notification {
+    // Loop the video
+    AVPlayerItem *item = notification.object;
+    [item seekToTime:kCMTimeZero completionHandler:nil];
+    [videoPlayer play];
+}
+
+- (void)stopVideo {
+    if (videoPlayer) {
+        [videoPlayer pause];
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:AVPlayerItemDidPlayToEndTimeNotification
+                                                      object:videoPlayer.currentItem];
+        videoPlayer = nil;
+        videoPlayerView.player = nil;
+    }
+    isShowingVideo = NO;
+}
+
+- (BOOL)isPlayingVideo {
+    return isShowingVideo && videoPlayer != nil;
 }
 
 - (void)setImageScaling:(BetterImageScaling)scaling {

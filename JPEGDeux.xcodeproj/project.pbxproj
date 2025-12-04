@@ -11,6 +11,9 @@
 		930E803517247A9C00291667 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930E803317247A9C00291667 /* QuartzCore.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		930E880617247A9C00291668 /* ImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 930E880517247A9C00291668 /* ImageLoader.m */; };
 		930E880817247A9C00291668 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930E880717247A9C00291668 /* ImageIO.framework */; };
+		930E880917247A9C00291669 /* MediaUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 930E880B17247A9C00291669 /* MediaUtils.m */; };
+		930E880C17247A9C00291669 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930E880A17247A9C00291669 /* AVKit.framework */; };
+		930E880D17247A9C00291669 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930E880E17247A9C00291669 /* AVFoundation.framework */; };
 		93965903171A1EA100286CB9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 939658F9171A1EA100286CB9 /* InfoPlist.strings */; };
 		93965906171A1EA100286CB9 /* JPEGDeuxAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93965900171A1EA100286CB9 /* JPEGDeuxAppDelegate.m */; };
 		93965907171A1EA100286CB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 93965901171A1EA100286CB9 /* main.m */; };
@@ -80,6 +83,10 @@
 		930E880417247A9C00291668 /* ImageLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageLoader.h; sourceTree = "<group>"; };
 		930E880517247A9C00291668 /* ImageLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageLoader.m; sourceTree = "<group>"; };
 		930E880717247A9C00291668 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		930E880A17247A9C00291669 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		930E880B17247A9C00291669 /* MediaUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediaUtils.m; sourceTree = "<group>"; };
+		930E880F17247A9C00291669 /* MediaUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaUtils.h; sourceTree = "<group>"; };
+		930E880E17247A9C00291669 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		930E803217247A9C00291667 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Quartz.framework; sourceTree = DEVELOPER_DIR; };
 		930E803317247A9C00291667 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		939658FA171A1EA100286CB9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -194,6 +201,8 @@
 				930E803417247A9C00291667 /* Quartz.framework in Frameworks */,
 				930E803517247A9C00291667 /* QuartzCore.framework in Frameworks */,
 				930E880817247A9C00291668 /* ImageIO.framework in Frameworks */,
+				930E880C17247A9C00291669 /* AVKit.framework in Frameworks */,
+				930E880D17247A9C00291669 /* AVFoundation.framework in Frameworks */,
 				9396590B171A356F00286CB9 /* Cocoa.framework in Frameworks */,
 				93E45F6314638D7D00C5C55B /* CoreFoundation.framework in Frameworks */,
 				93E45F6614638D8D00C5C55B /* AppKit.framework in Frameworks */,
@@ -261,6 +270,8 @@
 				F5C4771C014870FD01000001 /* Carbon.framework */,
 				F5F34E5D0145C6EF01000001 /* ApplicationServices.framework */,
 				930E880717247A9C00291668 /* ImageIO.framework */,
+				930E880A17247A9C00291669 /* AVKit.framework */,
+				930E880E17247A9C00291669 /* AVFoundation.framework */,
 				93E45F0F14638A3000C5C55B /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -402,6 +413,8 @@
 				F5B329560200F14901FDC0B7 /* BackgroundImageView.m */,
 				930E880417247A9C00291668 /* ImageLoader.h */,
 				930E880517247A9C00291668 /* ImageLoader.m */,
+				930E880F17247A9C00291669 /* MediaUtils.h */,
+				930E880B17247A9C00291669 /* MediaUtils.m */,
 				F5B3295D0200F14901FDC0B7 /* Master.h */,
 				F5B3295E0200F14901FDC0B7 /* Master.m */,
 				F53E929502EA3AE901549C9E /* MasterEventAction.h */,
@@ -551,6 +564,7 @@
 				93E45F5B14638CFD00C5C55B /* Procedural.m in Sources */,
 				93E45F3E14638CF100C5C55B /* SlideShow.m in Sources */,
 				930E880617247A9C00291668 /* ImageLoader.m in Sources */,
+				930E880917247A9C00291669 /* MediaUtils.m in Sources */,
 				93E45F4014638CF100C5C55B /* DockShow.m in Sources */,
 				93E45F4214638CF100C5C55B /* ScreenShow.m in Sources */,
 				93E45F4414638CF100C5C55B /* TransitionScreenShow.m in Sources */,

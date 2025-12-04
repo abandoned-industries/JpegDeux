@@ -23,6 +23,8 @@
     NSMutableArray* myChosenFiles;
     int myCurrentImageIndex;
     NSImage* myNextImage;
+    NSURL* myNextVideoURL;  // For video files
+    BOOL myNextIsVideo;     // Flag to indicate if next file is video
     NSMutableArray* myCachedImages;
     NSMutableArray* myCachedImageComments;
     BetterImageScaling myScaling;
@@ -63,6 +65,7 @@
 
 //SlideShow just ignores, subclasses can override
 - (void)setBackgroundColor:(NSColor*)color;
+- (void)setVideoURL:(NSURL*)url;
 - (void)redisplay;
 - (void)flipHorizontal;
 - (void)flipVertical;

@@ -21,6 +21,7 @@
 #import "sorting.h"
 #import "ImageWindowController.h"
 #import "DefaultTransitionChooser.h"
+#import "MediaUtils.h"
 
 NSString* const CancelShowException=@"CancelShow";
 
@@ -205,8 +206,8 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     [panel setCanChooseFiles:YES];
 	
 	[panel setDirectoryURL:[[NSURL alloc] initWithString:startingDirectory]];
-	// Use modern imageTypes (UTIs) instead of deprecated imageFileTypes
-	[panel setAllowedFileTypes:[NSImage imageTypes]];
+	// Use MediaUtils to support both images and videos
+	[panel setAllowedFileTypes:[MediaUtils supportedFileTypes]];
 	[panel beginSheetModalForWindow:[myFilesTable window] completionHandler:^(NSInteger returnCode)
 	{
 		[self openPanelDidEnd:panel returnCode:returnCode contextInfo:NULL];

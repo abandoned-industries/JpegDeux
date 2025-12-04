@@ -11,6 +11,7 @@
 #import "CommentFinder.h"
 #import "WindowMovingTextField.h"
 #import "ImageLoader.h"
+#import "MediaUtils.h"
 #include <errno.h>
 
 @implementation SlideShow
@@ -80,7 +81,8 @@
 //returns NO if we're all done, YES if we're still going
 //records the time that the image is actually displayed in timeOfDisplay
 - (BOOL)advanceImage:(CFTimeInterval*)timeOfDisplay {
-    if (myNextImage==nil) {
+    // Check if we have content to display (either image or video)
+    if (myNextImage==nil && !myNextIsVideo) {
         return NO;
     }
     if (myFileNameDisplay==FileNameDisplayPath) {
@@ -88,7 +90,14 @@
 	} else if (myFileNameDisplay==FileNameDisplayName) {
 		[self setImageName:[[myChosenFiles objectAtIndex:myCurrentImageIndex] lastPathComponent]];
 	}
-    [self setImage:myNextImage];
+
+    // Display either video or image
+    if (myNextIsVideo && myNextVideoURL) {
+        [self setVideoURL:myNextVideoURL];
+    } else {
+        [self setImage:myNextImage];
+    }
+
     if (myCommentStyle==CommentStyleWindow) [self updateWindowComments];
     *timeOfDisplay=CFAbsoluteTimeGetCurrent();
     if (++myCurrentImageIndex >= [myChosenFiles count]) return NO;
@@ -96,10 +105,17 @@
     return YES;
 }
 
+- (void)setVideoURL:(NSURL*)url {
+    // Subclasses should override to handle video playback
+    NSLog(@"Warning: setVideoURL: called on base SlideShow class");
+}
+
 - (void)loadNextImage {
     myFileComments=nil;
+    myNextIsVideo = NO;
+    myNextVideoURL = nil;
 
-    // If using smart cache, try to get from cache first
+    // If using smart cache, try to get from cache first (only for images)
     if (myUseSmartCache && myImageCache) {
         NSImage *cachedImage = [self cachedImageAtIndex:myCurrentImageIndex];
         if (cachedImage) {
@@ -119,6 +135,19 @@
         const NSSize zeroSize={0,0};
         do {
             NSString* path=[myChosenFiles objectAtIndex:myCurrentImageIndex];
+
+            // Check if this is a video file
+            if ([MediaUtils isVideoFile:path]) {
+                myNextIsVideo = YES;
+                myNextVideoURL = [NSURL fileURLWithPath:path];
+                myNextImage = nil;  // No image for videos
+                return;
+            }
+
+            // Handle images
+            myNextIsVideo = NO;
+            myNextVideoURL = nil;
+
             if ([path hasPrefix:@"http://"] || [path hasPrefix:@"https://"]) {
                 NSURL* url=[NSURL URLWithString:path];
                 if (url) {

@@ -63,6 +63,11 @@
     [myImageView setImage:image];
 }
 
+- (void)setVideoURL:(NSURL*)url {
+    [myImageView setRotation:myRotation];
+    [myImageView setVideoURL:url];
+}
+
 - (void)setImageName:(NSString*)name {
     [myImageView setImageName:name];
 }
