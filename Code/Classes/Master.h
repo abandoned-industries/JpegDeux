@@ -44,7 +44,7 @@ typedef enum {
     NSMutableArray* myFileHierarchyArray;
     NSColor* myBackgroundColor;
     NSUndoManager* myUndoer;
-    CommentStyle_t myCommentDisplay;
+    CommentStyle myCommentDisplay;
     DefaultTransitionChooser* myTransitionChooser;
 
     IBOutlet NSColorWell* myBackgroundColorWell;
