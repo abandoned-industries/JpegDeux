@@ -36,11 +36,20 @@ static NSData* archive(NSColor* c) {
 }
 
 static NSColor* unarchive(NSData* data) {
-    if (! data) return [NSColor blackColor];
-    NSError *error = nil;
-    NSColor *color = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSColor class] fromData:data error:&error];
-    if (error || !color) return [NSColor blackColor];
-    return color;
+    if (!data || [data length] == 0) return [NSColor blackColor];
+
+    // Try NSKeyedUnarchiver first (new format)
+    @try {
+        NSError *error = nil;
+        NSColor *color = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSColor class] fromData:data error:&error];
+        if (color) return color;
+    }
+    @catch (NSException *exception) {
+        // Fall through to return default
+    }
+
+    // Return default black color if unarchiving fails
+    return [NSColor blackColor];
 }
 
 static Master* sharedMaster;
@@ -108,6 +117,7 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     [myShouldLoopButton setIntValue:myShouldLoop];
     [myShouldRandomizeButton setIntValue:myShouldRandomize];
     [myTimeIntervalField setFloatValue:(float) myTimeInterval];
+    if (!myBackgroundColor) myBackgroundColor = [NSColor blackColor];
 	[myBackgroundColorWell setColor:myBackgroundColor];
     [myShouldAutoAdvanceButton setIntValue:myShouldAutoAdvance];
     [myScalingMatrix selectCellWithTag:myScaling];
