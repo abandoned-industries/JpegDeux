@@ -46,10 +46,22 @@ static NSColor* unarchive(NSData* data) {
         if (color) return color;
     }
     @catch (NSException *exception) {
-        // Fall through to return default
+        // Fall through to try legacy format
     }
 
-    // Return default black color if unarchiving fails
+    // Try legacy NSUnarchiver for old preferences data (deprecated but needed for backward compatibility)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    @try {
+        NSColor *color = [NSUnarchiver unarchiveObjectWithData:data];
+        if (color && [color isKindOfClass:[NSColor class]]) return color;
+    }
+    @catch (NSException *exception) {
+        // Fall through to return default
+    }
+#pragma clang diagnostic pop
+
+    // Return default black color if all unarchiving fails
     return [NSColor blackColor];
 }
 
@@ -170,6 +182,7 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     myCommentDisplay=[dict intForKey:@"CommentDisplay"];
     oldFiles= dict[@"ChosenFiles"];
     myBackgroundColor=unarchive(dict[@"BackgroundColor"]);
+    if (!myBackgroundColor) myBackgroundColor = [NSColor blackColor];
 //    if (! oldFiles) myFileHierarchyArray=[[NSMutableArray alloc] init];
 //    else myFileHierarchyArray=[[NSMutableArray alloc] initWithArray:unaliasIfNecessary(oldFiles)];
     myFileHierarchyArray=[[NSMutableArray alloc] init];
