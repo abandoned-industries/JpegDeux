@@ -9,6 +9,7 @@
 #import "FileHierarchySupport.h"
 #import "StringAdditions.h"
 #import "DataAlias.h"
+#import <AVFoundation/AVFoundation.h>
 
 static void flattenHierarchy(id hierarchy, NSMutableArray* array) {
     if (! [hierarchy isFolder]) [array addObject:hierarchy];
@@ -72,7 +73,15 @@ static void flattenHierarchy(id hierarchy, NSMutableArray* array) {
             CFStringRef fileExtension = (__bridge CFStringRef)[result pathExtension];
             CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
 
-            if (!UTTypeConformsTo(fileUTI, kUTTypeImage)) {
+            // Accept both images and videos
+            BOOL isImage = UTTypeConformsTo(fileUTI, kUTTypeImage);
+            BOOL isVideo = UTTypeConformsTo(fileUTI, kUTTypeMovie) || UTTypeConformsTo(fileUTI, kUTTypeVideo);
+
+            if (fileUTI) {
+                CFRelease(fileUTI);
+            }
+
+            if (!isImage && !isVideo) {
                 result=nil;
             }
         } 

@@ -175,6 +175,12 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     myDisplayModeClass=classes[tag%numShowTypes];
     myShouldAutoAdvance=[dict boolForKey:@"ShouldAutoAdvance"];
     myScaling=[dict intForKey:@"ScalingMode"];
+    // Migrate legacy Force Fit scaling modes since they are no longer supported
+    if (myScaling == ScaleToFit) {
+        myScaling = ScaleProportionally;
+    } else if (myScaling == ScaleDownToFit) {
+        myScaling = ScaleDownProportionally;
+    }
     myShouldOnlyScaleDown=[dict boolForKey:@"ShouldOnlyScaleDown"];
     myFileNameDisplay=[dict intForKey:@"FileNameDisplayType"];
     myShouldRecursivelyScanSubdirectories=[dict boolForKey:@"ShouldRecursivelyScanSubdirectories"];
