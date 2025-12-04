@@ -7,8 +7,6 @@
 
 #import "ScreenShow.h"
 #import "BackgroundImageView.h"
-#import <Carbon/Carbon.h>
-#import "BackgroundImageView.h"
 #import "TransitionScreenShow.h"
 
 @implementation ScreenShow

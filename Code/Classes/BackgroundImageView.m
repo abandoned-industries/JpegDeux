@@ -7,6 +7,7 @@
 #import "BackgroundImageView.h"
 #import "Procedural.h"
 #import "Scaling.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation BackgroundImageView
 
@@ -22,6 +23,15 @@
 		imageView = [[NSImageView alloc] initWithFrame:self.bounds];
 		imageView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
 		imageView.imageScaling = NSImageScaleProportionallyUpOrDown;
+
+        // Enable layer-backed view for better rendering
+        [imageView setWantsLayer:YES];
+
+        // Use high-quality interpolation for upscaling
+        // kCAFilterTrilinear provides smooth upscaling
+        imageView.layer.magnificationFilter = kCAFilterTrilinear;
+        imageView.layer.minificationFilter = kCAFilterTrilinear;
+
 		[self addSubview:imageView];
 
     }
