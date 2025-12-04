@@ -1,73 +1,21 @@
+//
+//  sorting.m
+//  JPEGDeux
+//
+//  Updated for modern macOS - removed Carbon dependencies
+
 #import "sorting.h"
 #import "FileHierarchySupport.h"
 #include <ctype.h>
-#import <Carbon/Carbon.h>
-
-static NSDate* dateForJan1904() {		// utility to return a singleton reference NSDate
-    static NSDate* Jan1904 = nil;
-    if (!Jan1904) {
-        Jan1904 = [NSDate dateWithString:@"1904-01-01 00:00:00 +0000"];
-    }
-    return Jan1904;
-}
-
-static NSDate* convertUTCtoNSDate(UTCDateTime input) {
-    NSDate* result = nil;
-    union {
-        UTCDateTime local;
-        UInt64 shifted;
-    } time;
-    time.local = input;
-    if (time.shifted) {
-        result = [[NSDate alloc] initWithTimeInterval:time.shifted/65536
-                                             sinceDate:dateForJan1904()];
-    }
-    return result;
-}
-
-static NSDate* loadModDate(NSString* path) {
-    Boolean isDir;
-    OSErr err;
-    FSRef ref;
-    NSDate* result=nil;
-    FSCatalogInfo info;
-    err=FSPathMakeRef((UInt8 *)[path fileSystemRepresentation], &ref, &isDir);
-    if (err==noErr) {
-        err=FSGetCatalogInfo(&ref, kFSCatInfoContentMod, &info, NULL, NULL, NULL);
-        if (err==noErr) {
-            result=convertUTCtoNSDate(info.contentModDate);
-        }
-    }
-    return result;
-}
-
-static NSDate* loadCreateDate(NSString* path) {
-    Boolean isDir;
-    OSErr err;
-    FSRef ref;
-    NSDate* result=nil;
-    FSCatalogInfo info;
-    err=FSPathMakeRef((UInt8 *)[path fileSystemRepresentation], &ref, &isDir);
-    if (err==noErr) {
-        err=FSGetCatalogInfo(&ref, kFSCatInfoCreateDate, &info, NULL, NULL, NULL);
-        if (err==noErr) {
-            result=convertUTCtoNSDate(info.createDate);
-        }
-    }
-    return result;
-}
 
 static id loadValue(NSString* path, NSMutableDictionary* dict, NSString* key) {
     id value;
-    NSFileManager* manager=[NSFileManager defaultManager];
-    
-    NSDictionary* attribs=[manager attributesOfItemAtPath:path error:nil];
+    NSFileManager* manager = [NSFileManager defaultManager];
 
-    value=[attribs objectForKey:key];
-    if (! value) {
-        if ([key isEqualToString:@"NSFileModificationDate"]) value=loadModDate(path);
-        else if ([key isEqualToString:@"NSFileCreationDate"]) value=loadCreateDate(path);
-    }
+    NSError *error = nil;
+    NSDictionary* attribs = [manager attributesOfItemAtPath:path error:&error];
+
+    value = [attribs objectForKey:key];
     if (value) [dict setObject:value forKey:path];
     return value;
 }
@@ -113,8 +61,11 @@ NSComparisonResult sortModified(NSString* firstPath, NSString* secondPath, NSMut
     NSString* second=[secondPath filename];
     f=[dict objectForKey:first];
     s=[dict objectForKey:second];
-    if (! f) f=loadValue(first, dict, @"NSFileModificationDate");
-    if (! s) s=loadValue(second, dict, @"NSFileModificationDate");
+    if (! f) f=loadValue(first, dict, NSFileModificationDate);
+    if (! s) s=loadValue(second, dict, NSFileModificationDate);
+    if (!f && !s) return NSOrderedSame;
+    if (!f) return NSOrderedAscending;
+    if (!s) return NSOrderedDescending;
     return [f compare:s];
 }
 
@@ -124,8 +75,11 @@ NSComparisonResult sortCreated(NSString* firstPath, NSString* secondPath, NSMuta
     NSString* second=[secondPath filename];
     f=[dict objectForKey:first];
     s=[dict objectForKey:second];
-    if (! f) f=loadValue(first, dict, @"NSFileCreationDate");
-    if (! s) s=loadValue(second, dict, @"NSFileCreationDate");
+    if (! f) f=loadValue(first, dict, NSFileCreationDate);
+    if (! s) s=loadValue(second, dict, NSFileCreationDate);
+    if (!f && !s) return NSOrderedSame;
+    if (!f) return NSOrderedAscending;
+    if (!s) return NSOrderedDescending;
     return [f compare:s];
 }
 

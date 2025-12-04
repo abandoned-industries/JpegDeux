@@ -96,8 +96,14 @@ static NSString* displayStringForKey(unichar key) {
     defs=[prefs objectForKey:KeyBindingsKey];
     if (defs==nil) [self revertToDefaults:self];
     else {
-        NSArray* uncoded=[NSUnarchiver unarchiveObjectWithData:defs];
-        myKeyBindings=[[NSMutableArray alloc] initWithArray:uncoded];
+        NSError *error = nil;
+        NSSet *classes = [NSSet setWithObjects:[NSArray class], [KeyBinding class], [NSNull class], [NSString class], nil];
+        NSArray* uncoded = [NSKeyedUnarchiver unarchivedObjectOfClasses:classes fromData:defs error:&error];
+        if (error || !uncoded) {
+            [self revertToDefaults:self];
+        } else {
+            myKeyBindings=[[NSMutableArray alloc] initWithArray:uncoded];
+        }
     }
 }
 
@@ -105,9 +111,12 @@ static NSString* displayStringForKey(unichar key) {
     NSData* defs;
     NSUserDefaults* prefs=[NSUserDefaults standardUserDefaults];
     if (! myKeyBindings) [self revertToDefaults:self];
-    defs=[NSArchiver archivedDataWithRootObject:myKeyBindings];
-    [prefs setObject:defs forKey:KeyBindingsKey];
-    [prefs synchronize];
+    NSError *error = nil;
+    defs = [NSKeyedArchiver archivedDataWithRootObject:myKeyBindings requiringSecureCoding:NO error:&error];
+    if (defs) {
+        [prefs setObject:defs forKey:KeyBindingsKey];
+        [prefs synchronize];
+    }
 }
 
 
@@ -166,11 +175,14 @@ static NSString* displayStringForKey(unichar key) {
         lastKey=kb->key;
     }
     if (i < max) {
-        NSInteger result=NSRunAlertPanel(@"Duplicate actions",
-                                   @"Multiple actions have been assigned to the same key! "
-                                   @"Only one action will take effect.  Are you sure you wish to continue?",
-                                   @"Continue", @"Cancel", nil);
-        return result==NSAlertDefaultReturn;
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"Duplicate actions";
+        alert.informativeText = @"Multiple actions have been assigned to the same key! "
+                                @"Only one action will take effect.  Are you sure you wish to continue?";
+        [alert addButtonWithTitle:@"Continue"];
+        [alert addButtonWithTitle:@"Cancel"];
+        NSModalResponse result = [alert runModal];
+        return result == NSAlertFirstButtonReturn;
     }
     else return YES;
 }
@@ -233,7 +245,7 @@ static NSString* displayStringForKey(unichar key) {
             [panel setCanChooseDirectories:YES];
             [panel setResolvesAliases:YES];
             result=[panel runModal];
-            if (result==NSCancelButton) return;
+            if (result==NSModalResponseCancel) return;
 			NSURL *pathUrl = [panel URLs][0];
             NSString *path=[pathUrl absoluteString];
             kb->param=path;
@@ -254,7 +266,7 @@ static NSString* displayStringForKey(unichar key) {
     NSEvent* event;
     [NSCursor hide];
     [myFieldInstructions setStringValue:@"Hit any key to change the binding for this action"];
-    event=[app nextEventMatchingMask: NSKeyDownMask
+    event=[app nextEventMatchingMask: NSEventMaskKeyDown
                            untilDate:[NSDate distantFuture]
                               inMode:NSEventTrackingRunLoopMode
                              dequeue:YES];
@@ -301,21 +313,29 @@ static NSString* displayStringForKey(unichar key) {
 }
 
 - (id)initWithCoder:(NSCoder*)coder {
-    int version;
-    [coder decodeValueOfObjCType:@encode(int) at:&version];
-    [coder decodeValueOfObjCType:@encode(SEL) at:&action];
-    [coder decodeValueOfObjCType:@encode(unichar) at:&key];
-    param=[coder decodeObject];
+    self = [super init];
+    if (self) {
+        NSString *actionString = [coder decodeObjectForKey:@"action"];
+        if (actionString) {
+            action = NSSelectorFromString(actionString);
+        }
+        key = (unichar)[coder decodeIntegerForKey:@"key"];
+        param = [coder decodeObjectForKey:@"param"];
+        if ([param isKindOfClass:[NSNull class]]) {
+            param = nil;
+        }
+    }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder*)coder {
-    int version=200;
-    [coder encodeValueOfObjCType:@encode(int) at:&version];
-    [coder encodeValueOfObjCType:@encode(SEL) at:&action];
-    [coder encodeValueOfObjCType:@encode(unichar) at:&key];
-    if (! param) param=[NSNull null];
-    [coder encodeObject:param];
+    [coder encodeObject:NSStringFromSelector(action) forKey:@"action"];
+    [coder encodeInteger:key forKey:@"key"];
+    if (param) {
+        [coder encodeObject:param forKey:@"param"];
+    } else {
+        [coder encodeObject:[NSNull null] forKey:@"param"];
+    }
 }
 
 - (NSComparisonResult)comparer:(KeyBinding*)keyBinding {

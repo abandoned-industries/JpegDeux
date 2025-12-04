@@ -3,9 +3,9 @@
 //  JPEGDeux
 //
 //  Created by Peter on Wed Sep 07 2001.
+//  Updated for modern macOS using NSURL APIs
 
 #import <Cocoa/Cocoa.h>
-#import <Carbon/Carbon.h>
 
 @interface NSString (StringAdditions)
 
@@ -14,10 +14,6 @@
 //returns nil if self cannot be resolved.  Does not attempt to mount volumes.
 //if isDir is not nil, returns whether or not the resolved file is a directory
 - (NSString*)resolveAliasesIsDir:(BOOL*)pIsDir;
-
-// fills in spec with the FSSpec for the given path
-// returns YES on success
-- (BOOL)makeFSSpec:(FSSpec*)spec;
 
 //case sensitive
 - (NSString*)commonSuffixWithString:(NSString*)s;

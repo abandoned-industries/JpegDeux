@@ -3,6 +3,7 @@
 //  JPEGDeux
 //
 //  Created by Peter on Wed Sep 07 2001.
+//  Updated for modern macOS using NSURL APIs
 
 
 #import "StringAdditions.h"
@@ -14,38 +15,53 @@
 //returns nil if self cannot be resolved.  Does not attempt to mount volumes.
 //if isDir is not nil, returns whether or not the resolved file is a directory
 - (NSString*)resolveAliasesIsDir:(BOOL*)pIsDir {
-    Boolean isDir, wasAlias;
-    FSRef ref;
-    OSStatus result;
-    result=FSPathMakeRef((UInt8 *)[self UTF8String], &ref, &isDir);
-    if (result != noErr) return nil;
-    if (isDir) {
-        if (pIsDir) *pIsDir=YES;
+    NSURL *url = [NSURL fileURLWithPath:self];
+    if (!url) {
+        return nil;
+    }
+
+    NSError *error = nil;
+    NSNumber *isDirectory = nil;
+    NSNumber *isAlias = nil;
+
+    // Check if this is a directory
+    [url getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error];
+    if (error) {
+        return nil;
+    }
+
+    if ([isDirectory boolValue]) {
+        if (pIsDir) *pIsDir = YES;
         return self;
     }
-    result=FSResolveAliasFileWithMountFlags(&ref, YES, &isDir, &wasAlias, kARMNoUI | kARMSearch);
-    if (pIsDir) *pIsDir=isDir;
-    if (result != noErr) return nil;
-    if (wasAlias) {
-        unsigned char pathBuff[512];
-        result=FSRefMakePath(&ref, pathBuff, sizeof pathBuff);
-        if (result != noErr) return nil;
 
-        return [NSString stringWithCString:(const char *)pathBuff encoding:NSASCIIStringEncoding];
-
+    // Check if this is an alias file
+    [url getResourceValue:&isAlias forKey:NSURLIsAliasFileKey error:&error];
+    if (error) {
+        return nil;
     }
+
+    if (pIsDir) *pIsDir = [isDirectory boolValue];
+
+    if ([isAlias boolValue]) {
+        // Resolve the alias
+        NSError *resolveError = nil;
+        NSURL *resolvedURL = [NSURL URLByResolvingAliasFileAtURL:url
+                                                         options:NSURLBookmarkResolutionWithoutUI
+                                                           error:&resolveError];
+        if (resolveError || !resolvedURL) {
+            return nil;
+        }
+
+        // Check if resolved URL is a directory
+        NSNumber *resolvedIsDirectory = nil;
+        [resolvedURL getResourceValue:&resolvedIsDirectory forKey:NSURLIsDirectoryKey error:nil];
+        if (pIsDir) *pIsDir = [resolvedIsDirectory boolValue];
+
+        return [resolvedURL path];
+    }
+
     return self;
-}
-
-- (BOOL)makeFSSpec:(FSSpec*)spec {
-    OSErr err;
-    FSRef ref;
-    
-    err=FSPathMakeRef((UInt8 *)[self UTF8String], &ref, 0);
-    if (! err) {
-     err=FSGetCatalogInfo (&ref, kFSCatInfoNone, NULL, NULL, spec, NULL);
-    }
-    return err==noErr;
 }
 
 - (NSString*)commonSuffixWithString:(NSString*)s {
@@ -61,4 +77,3 @@
 }
 
 @end
-

@@ -12,7 +12,7 @@
 
 - (void)beginShow:(NSArray*)files {
     myWindow=[[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 800, 600)
-                               styleMask:NSTitledWindowMask | NSResizableWindowMask | NSMiniaturizableWindowMask | NSClosableWindowMask
+                               styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskResizable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskClosable
                                backing:NSBackingStoreBuffered
                                defer:NO];
     [myWindow useOptimizedDrawing:YES];
@@ -74,7 +74,7 @@
 }
 
 - (BOOL)windowShouldClose:(NSWindow*)window {
-    NSEvent* event=[NSEvent otherEventWithType:NSApplicationDefined
+    NSEvent* event=[NSEvent otherEventWithType:NSEventTypeApplicationDefined
                             location:NSMakePoint(0,0)
                             modifierFlags:0
                             timestamp:0 /* This is supposed to be the time since system startup; how do we get that?? */

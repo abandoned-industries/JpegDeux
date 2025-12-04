@@ -58,7 +58,6 @@
 		93E45F5814638CFD00C5C55B /* sorting.m in Sources */ = {isa = PBXBuildFile; fileRef = F503B36E03590DDE01168C0E /* sorting.m */; };
 		93E45F5B14638CFD00C5C55B /* Procedural.m in Sources */ = {isa = PBXBuildFile; fileRef = F52FF8700202FA8201FDC0B7 /* Procedural.m */; };
 		93E45F6314638D7D00C5C55B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5F34E5B0145C0BD01000001 /* CoreFoundation.framework */; };
-		93E45F6414638D8600C5C55B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5C4771C014870FD01000001 /* Carbon.framework */; };
 		93E45F6614638D8D00C5C55B /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E45F1014638A3000C5C55B /* AppKit.framework */; };
 		93E45F6814638D8D00C5C55B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E45F1214638A3000C5C55B /* Foundation.framework */; };
 /* End PBXBuildFile section */
@@ -190,7 +189,6 @@
 				930E803417247A9C00291667 /* Quartz.framework in Frameworks */,
 				930E803517247A9C00291667 /* QuartzCore.framework in Frameworks */,
 				9396590B171A356F00286CB9 /* Cocoa.framework in Frameworks */,
-				93E45F6414638D8600C5C55B /* Carbon.framework in Frameworks */,
 				93E45F6314638D7D00C5C55B /* CoreFoundation.framework in Frameworks */,
 				93E45F6614638D8D00C5C55B /* AppKit.framework in Frameworks */,
 				93E45F6814638D8D00C5C55B /* Foundation.framework in Frameworks */,
@@ -759,7 +757,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = JPEGDeuxTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.approachingpi.JPEGDeuxTests;
@@ -811,7 +809,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = JPEGDeuxTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.approachingpi.JPEGDeuxTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -861,7 +859,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = JPEGDeuxTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.approachingpi.JPEGDeuxTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -896,7 +894,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "JPEGDeux/JPEGDeux-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wirelust.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -922,7 +920,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "JPEGDeux/JPEGDeux-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wirelust.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -947,7 +945,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "JPEGDeux/JPEGDeux-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wirelust.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;

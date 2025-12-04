@@ -19,7 +19,7 @@
 }
 
 - (void)beginShow:(NSArray*)files {
-    const unsigned int styleMask=NSBorderlessWindowMask;//NSTitledWindowMask | NSMiniaturizableWindowMask;
+    const unsigned int styleMask=NSWindowStyleMaskBorderless;
     myChosenFiles=[files mutableCopy];
     if (myCommentStyle==windowComment) {
         myCommentWindow=[[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 6, 6)

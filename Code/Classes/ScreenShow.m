@@ -28,7 +28,7 @@
 
 - (void)beginShow:(NSArray*)files {
     myCoveringWindow=[[NSWindow alloc] initWithContentRect:[[NSScreen mainScreen] frame]
-                       styleMask:NSBorderlessWindowMask
+                       styleMask:NSWindowStyleMaskBorderless
                        backing:NSBackingStoreBuffered
                        defer:NO];
     [myCoveringWindow useOptimizedDrawing:YES];

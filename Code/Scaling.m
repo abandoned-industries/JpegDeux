@@ -1,10 +1,5 @@
 #import "Scaling.h"
 
-Rect nsRectToRect(NSRect rect) {
-    Rect newRect={NSMaxY(rect), NSMaxX(rect), NSMinY(rect), NSMinX(rect) };
-    return newRect;
-}
-
 NSSize rotateSize(NSSize size) {
     float temp;
     temp=size.width;

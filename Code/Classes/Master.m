@@ -30,12 +30,17 @@ const short StopSlideshowEventType=15;
 
 static NSData* archive(NSColor* c) {
     if (! c) c = [NSColor blackColor];
-    return [NSArchiver archivedDataWithRootObject:c];
+    NSError *error = nil;
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:c requiringSecureCoding:NO error:&error];
+    return data;
 }
 
 static NSColor* unarchive(NSData* data) {
     if (! data) return [NSColor blackColor];
-    else return [NSUnarchiver unarchiveObjectWithData:data];
+    NSError *error = nil;
+    NSColor *color = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSColor class] fromData:data error:&error];
+    if (error || !color) return [NSColor blackColor];
+    return color;
 }
 
 static Master* sharedMaster;
@@ -211,7 +216,7 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
 
 - (void)openPanelDidEnd:(NSOpenPanel*)panel returnCode:(NSUInteger)returnCode contextInfo:(void*)contextInfo {
     NSUserDefaults* defaults=[NSUserDefaults standardUserDefaults];
-    if (returnCode == NSOKButton) {
+    if (returnCode == NSModalResponseOK) {
         NSArray* filesToOpen = [panel URLs];
         if ([filesToOpen count] > 0) {
             [defaults setObject:[[filesToOpen[0] absoluteString] stringByDeletingLastPathComponent] forKey:@"DefaultImageDirectory"];
@@ -339,7 +344,7 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
 	[panel setDirectoryURL: directory];
     NSUInteger result = (NSUInteger) [panel runModal];
 			
-    if (result==NSOKButton) [self openSlideshowWithUrl:[[panel URLs] objectAtIndex:0]];
+    if (result==NSModalResponseOK) [self openSlideshowWithUrl:[[panel URLs] objectAtIndex:0]];
 }
 
 - (IBAction)saveDocument:(id)sender {
@@ -463,7 +468,7 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
 				}
 				
                 do {
-                    event=[application nextEventMatchingMask: NSAnyEventMask
+                    event=[application nextEventMatchingMask: NSEventMaskAny
                                                    untilDate:finishDate
                                                       inMode:NSDefaultRunLoopMode
                                                      dequeue:YES];
@@ -501,14 +506,14 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
 - (EventAction)handleEvent:(NSEvent*)event {
     NSEventType type=[event type];
     //NSLog([event description]);
-    if (type==NSKeyDown) {
+    if (type==NSEventTypeKeyDown) {
         unichar theChar=[[event characters] characterAtIndex:0];
         id param=NULL;
         SEL sel=[myPrefsManager selectorForKey:theChar withParam:&param];
-        if (theChar=='.' && ([event modifierFlags] & NSCommandKeyMask)) return eStop;
+        if (theChar=='.' && ([event modifierFlags] & NSEventModifierFlagCommand)) return eStop;
         if (sel) return [self intPerformSelector:sel withObject:param];
     }
-    else if (type==NSApplicationDefined) {
+    else if (type==NSEventTypeApplicationDefined) {
         if ([event subtype]==StopSlideshowEventType)
             return eStop;
     }
