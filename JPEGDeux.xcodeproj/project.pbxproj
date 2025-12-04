@@ -83,8 +83,8 @@
 		939658FF171A1EA100286CB9 /* JPEGDeuxAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPEGDeuxAppDelegate.h; sourceTree = "<group>"; };
 		93965900171A1EA100286CB9 /* JPEGDeuxAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPEGDeuxAppDelegate.m; sourceTree = "<group>"; };
 		93965901171A1EA100286CB9 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		93965908171A234400286CB9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
-		9396590A171A356F00286CB9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		93965908171A234400286CB9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		9396590A171A356F00286CB9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		93A273721DF78DD5000319F3 /* JpegDeux-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JpegDeux-Bridging-Header.h"; sourceTree = "<group>"; };
 		93A31A4E171A3E1F00528ABE /* Scaling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scaling.m; sourceTree = "<group>"; };
 		93A31A57171A40A400528ABE /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = JPEGDeux/en.lproj/DefaultTransitionView.nib; sourceTree = "<group>"; };

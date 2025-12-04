@@ -37,7 +37,8 @@ static NSImage* originalImage;
 }
 
 - (long)estimatedSizeOfCachedImages {
-    long bytesPerPixel=(NSBitsPerPixelFromDepth([[NSScreen mainScreen] depth]) + 7) / 8;
+    // Modern Macs use 32-bit color (4 bytes per pixel)
+    long bytesPerPixel = 4;
     return bytesPerPixel*128*128*[myChosenFiles count];
 }
 
