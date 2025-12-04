@@ -65,8 +65,13 @@
         [myWindow orderOut:self];
         [myMaster processAndAddURLs:array];
     }
-    else NSRunAlertPanel(@"Bad URLs", @"JPEGDeux couldn't interpret the supplied URLs.",
-                                    @"D'oh!", nil, nil);
+    else {
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"Bad URLs";
+        alert.informativeText = @"JPEGDeux couldn't interpret the supplied URLs.";
+        [alert addButtonWithTitle:@"D'oh!"];
+        [alert runModal];
+    }
 }
 
 - (IBAction)cancel:(id)sender {
@@ -90,10 +95,13 @@
 
 - (IBAction)showDialog:(id)sender {
     if (! myWindow) {
-
-        if (! [NSBundle loadNibNamed:@"InternetImages" owner:self] || !myWindow) {
-            NSRunAlertPanel(@"Nib error", @"JPEGDeux couldn't open InternetImages.nib",
-                            @"D'oh!", nil, nil);
+        NSArray *topLevelObjects = nil;
+        if (! [[NSBundle mainBundle] loadNibNamed:@"InternetImages" owner:self topLevelObjects:&topLevelObjects] || !myWindow) {
+            NSAlert *alert = [[NSAlert alloc] init];
+            alert.messageText = @"Nib error";
+            alert.informativeText = @"JPEGDeux couldn't open InternetImages.nib";
+            [alert addButtonWithTitle:@"D'oh!"];
+            [alert runModal];
             return;
         }
     }
