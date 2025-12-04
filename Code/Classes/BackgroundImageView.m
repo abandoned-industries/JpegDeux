@@ -157,8 +157,9 @@
     if (!videoPlayerView) {
         videoPlayerView = [[AVPlayerView alloc] initWithFrame:self.bounds];
         videoPlayerView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-        videoPlayerView.controlsStyle = AVPlayerViewControlsStyleNone;
+        videoPlayerView.controlsStyle = AVPlayerViewControlsStyleInline;
         videoPlayerView.videoGravity = AVLayerVideoGravityResizeAspect;
+        videoPlayerView.showsFullScreenToggleButton = YES;
         [videoPlayerView setWantsLayer:YES];
         [self addSubview:videoPlayerView];
         [videoPlayerView setHidden:YES];
