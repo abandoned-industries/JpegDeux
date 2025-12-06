@@ -12,7 +12,7 @@
 @implementation ModernWindowController
 
 - (instancetype)initWithMaster:(Master *)master {
-    NSWindow *window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 700, 580)
+    NSWindow *window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 850, 650)
                                                    styleMask:NSWindowStyleMaskTitled |
                                                             NSWindowStyleMaskClosable |
                                                             NSWindowStyleMaskMiniaturizable |
@@ -20,7 +20,7 @@
                                                      backing:NSBackingStoreBuffered
                                                        defer:NO];
     window.title = @"JPEGDeux";
-    window.minSize = NSMakeSize(650, 550);
+    window.minSize = NSMakeSize(750, 600);
     [window setFrameAutosaveName:@"ModernMainWindow"];
 
     self = [super initWithWindow:window];
@@ -53,7 +53,7 @@
     NSView *contentView = self.window.contentView;
     CGFloat padding = 20;
     CGFloat cardSpacing = 16;
-    CGFloat leftColumnWidth = 320;
+    CGFloat leftColumnWidth = 400;
     CGFloat y = contentView.bounds.size.height - padding;
 
     // Left column cards
@@ -62,15 +62,15 @@
     // Display Mode card
     y -= 80;
     NSBox *displayCard = [self createCardAtX:leftX y:y width:leftColumnWidth height:70 title:@"Display Mode"];
-    _displayModeMatrix.frame = NSMakeRect(16, 10, 280, 24);
+    _displayModeMatrix.frame = NSMakeRect(16, 10, 360, 24);
     [displayCard.contentView addSubview:_displayModeMatrix];
     [contentView addSubview:displayCard];
 
     // Scaling card
     y -= (70 + cardSpacing);
     NSBox *scalingCard = [self createCardAtX:leftX y:y width:leftColumnWidth height:70 title:@"Scaling"];
-    _scalingMatrix.frame = NSMakeRect(16, 30, 200, 24);
-    _onlyScaleDownButton.frame = NSMakeRect(16, 8, 150, 18);
+    _scalingMatrix.frame = NSMakeRect(16, 30, 280, 24);
+    _onlyScaleDownButton.frame = NSMakeRect(16, 8, 180, 18);
     [scalingCard.contentView addSubview:_scalingMatrix];
     [scalingCard.contentView addSubview:_onlyScaleDownButton];
     [contentView addSubview:scalingCard];
@@ -80,17 +80,17 @@
     NSBox *playbackCard = [self createCardAtX:leftX y:y width:leftColumnWidth height:150 title:@"Playback"];
     _randomOrderButton.frame = NSMakeRect(16, 110, 120, 18);
     _loopButton.frame = NSMakeRect(150, 110, 60, 18);
-    _autoAdvanceButton.frame = NSMakeRect(16, 85, 110, 18);
-    _intervalField.frame = NSMakeRect(130, 83, 50, 22);
+    _showFileListButton.frame = NSMakeRect(230, 110, 120, 18);
+    _autoAdvanceButton.frame = NSMakeRect(16, 85, 115, 18);
+    _intervalField.frame = NSMakeRect(135, 83, 50, 22);
+    _moviesOnlyButton.frame = NSMakeRect(230, 85, 120, 18);
     _precacheButton.frame = NSMakeRect(16, 60, 100, 18);
-    _displayCommentsButton.frame = NSMakeRect(130, 60, 140, 18);
-    _showFileListButton.frame = NSMakeRect(220, 110, 90, 18);
-    _moviesOnlyButton.frame = NSMakeRect(200, 85, 110, 18);
+    _displayCommentsButton.frame = NSMakeRect(135, 60, 140, 18);
 
     NSTextField *filenameLabel = [NSTextField labelWithString:@"Filename:"];
     filenameLabel.frame = NSMakeRect(16, 35, 70, 17);
     filenameLabel.font = [NSFont systemFontOfSize:12];
-    _filenameDisplayMatrix.frame = NSMakeRect(16, 8, 280, 22);
+    _filenameDisplayMatrix.frame = NSMakeRect(16, 8, 360, 22);
 
     [playbackCard.contentView addSubview:_randomOrderButton];
     [playbackCard.contentView addSubview:_loopButton];
