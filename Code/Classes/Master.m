@@ -367,6 +367,10 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     myCommentDisplay=[sender intValue];
 }
 
+- (IBAction)setShowFileList:(id)sender {
+    myShouldShowFileList=[sender intValue];
+}
+
 - (void)openSlideshow:(NSString*)path {
 	NSURL *url = [[NSURL alloc] initWithString:path];
 	[self openSlideshowWithUrl:url];
@@ -503,6 +507,14 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     date=[NSDate date];
 	
     @try {
+        // Show file list panel at start if requested
+        if (myShouldShowFileList) {
+            FileListPanel *panel = [FileListPanel sharedPanel];
+            panel.fileListDelegate = self;
+            [panel updateWithFiles:[myCurrentShow fileList] currentIndex:[myCurrentShow currentFileIndex]];
+            [panel makeKeyAndOrderFront:nil];
+        }
+
         do {
             NSEvent* event=nil;
             BOOL shouldContinue=YES;
@@ -552,8 +564,11 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
 		// TODO: handle an exception
 		//if (! [[localException name] isEqualToString:CancelShowException]) [localException raise];
 	}
-	
+
         //NSLog(@"%f", [[NSDate date] timeIntervalSinceDate:date]); //used for timing shows
+
+        // Close file list panel when slideshow ends
+        [[FileListPanel sharedPanel] orderOut:nil];
 
         if (drawerIsOpen) [myDrawer close];
         [myWindow makeKeyAndOrderFront:self];

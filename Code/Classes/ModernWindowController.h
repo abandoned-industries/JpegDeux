@@ -31,6 +31,7 @@
 @property (nonatomic, strong) NSButton *autoAdvanceButton;
 @property (nonatomic, strong) NSTextField *intervalField;
 @property (nonatomic, strong) NSButton *displayCommentsButton;
+@property (nonatomic, strong) NSButton *showFileListButton;
 
 // Appearance
 @property (nonatomic, strong) NSColorWell *backgroundColorWell;

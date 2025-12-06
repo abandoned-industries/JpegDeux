@@ -84,6 +84,7 @@
     _intervalField.frame = NSMakeRect(130, 83, 50, 22);
     _precacheButton.frame = NSMakeRect(16, 60, 100, 18);
     _displayCommentsButton.frame = NSMakeRect(130, 60, 140, 18);
+    _showFileListButton.frame = NSMakeRect(220, 110, 90, 18);
 
     NSTextField *filenameLabel = [NSTextField labelWithString:@"Filename:"];
     filenameLabel.frame = NSMakeRect(16, 35, 70, 17);
@@ -96,6 +97,7 @@
     [playbackCard.contentView addSubview:_intervalField];
     [playbackCard.contentView addSubview:_precacheButton];
     [playbackCard.contentView addSubview:_displayCommentsButton];
+    [playbackCard.contentView addSubview:_showFileListButton];
     [playbackCard.contentView addSubview:filenameLabel];
     [playbackCard.contentView addSubview:_filenameDisplayMatrix];
     [contentView addSubview:playbackCard];
@@ -236,6 +238,9 @@
 
     self.displayCommentsButton = [NSButton checkboxWithTitle:@"Show comments" target:self.master action:@selector(setCommentDisplay:)];
     self.displayCommentsButton.font = [NSFont systemFontOfSize:12];
+
+    self.showFileListButton = [NSButton checkboxWithTitle:@"Show file list" target:self.master action:@selector(setShowFileList:)];
+    self.showFileListButton.font = [NSFont systemFontOfSize:12];
 
     self.filenameDisplayMatrix = [[NSMatrix alloc] initWithFrame:NSZeroRect
                                                            mode:NSRadioModeMatrix
