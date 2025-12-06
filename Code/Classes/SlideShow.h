@@ -80,4 +80,9 @@
 - (void)preloadNearbyImages;
 - (NSImage *)cachedImageAtIndex:(NSInteger)index;
 
+// File list navigation
+- (NSArray *)fileList;
+- (NSInteger)currentFileIndex;
+- (void)jumpToIndex:(NSInteger)index;
+
 @end

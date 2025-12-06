@@ -26,6 +26,7 @@
 - (EventAction)kbFlipH:(id)param;
 - (EventAction)kbFlipV:(id)param;
 - (EventAction)kbToggleComments:(id)param;
+- (EventAction)kbToggleFileList:(id)param;
 
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FILELS01171A40A400528ABE /* FileListPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FILELS02171A40A400528ABE /* FileListPanel.m */; };
 		MODERN01171A40A400528ABE /* ModernWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = MODERN02171A40A400528ABE /* ModernWindowController.m */; };
 		930E803417247A9C00291667 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930E803217247A9C00291667 /* Quartz.framework */; };
 		930E803517247A9C00291667 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930E803317247A9C00291667 /* QuartzCore.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -68,6 +69,8 @@
 
 
 /* Begin PBXFileReference section */
+		FILELS02171A40A400528ABE /* FileListPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileListPanel.m; sourceTree = "<group>"; };
+		FILELS03171A40A400528ABE /* FileListPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileListPanel.h; sourceTree = "<group>"; };
 		0A052D38085C74ED0037FF42 /* Scaling.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = Scaling.m; path = Code/Scaling.m; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		930E880417247A9C00291668 /* ImageLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageLoader.h; sourceTree = "<group>"; };
@@ -358,6 +361,8 @@
 			children = (
 				F5B329550200F14901FDC0B7 /* BackgroundImageView.h */,
 				F5B329560200F14901FDC0B7 /* BackgroundImageView.m */,
+				FILELS03171A40A400528ABE /* FileListPanel.h */,
+				FILELS02171A40A400528ABE /* FileListPanel.m */,
 				930E880417247A9C00291668 /* ImageLoader.h */,
 				930E880517247A9C00291668 /* ImageLoader.m */,
 				930E880F17247A9C00291669 /* MediaUtils.h */,
@@ -452,6 +457,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FILELS01171A40A400528ABE /* FileListPanel.m in Sources */,
 				MODERN01171A40A400528ABE /* ModernWindowController.m in Sources */,
 				93A31A3D171A3B4400528ABE /* PreviewImageView.m in Sources */,
 				93A31A3E171A3B4400528ABE /* WindowMovingTextField.m in Sources */,

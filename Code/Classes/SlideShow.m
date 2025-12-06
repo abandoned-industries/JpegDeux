@@ -458,4 +458,24 @@
     return [myImageCache objectForKey:@(index)];
 }
 
+#pragma mark - File List Navigation
+
+- (NSArray *)fileList {
+    return [myChosenFiles copy];
+}
+
+- (NSInteger)currentFileIndex {
+    // myCurrentImageIndex points to the *next* image to load,
+    // so current displayed image is at index - 1
+    return myCurrentImageIndex - 1;
+}
+
+- (void)jumpToIndex:(NSInteger)index {
+    if (index < 0 || index >= (NSInteger)[myChosenFiles count]) {
+        return;
+    }
+    myCurrentImageIndex = (int)index;
+    [self loadNextImage];
+}
+
 @end

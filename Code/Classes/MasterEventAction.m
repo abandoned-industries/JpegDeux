@@ -9,6 +9,7 @@
 #import "Master.h"
 #import "MasterEventAction.h"
 #import "SlideShow.h"
+#import "FileListPanel.h"
 
 //thanks to Tomas Zahradnicky, Jr. who wrote invalTrashContents
 static OSErr invalTrashContents(void);
@@ -126,6 +127,14 @@ static OSErr invalTrashContents(void);
 
 - (EventAction)kbToggleComments:(id)param {
     [myCurrentShow toggleCommentWindow];
+    return eReeval;
+}
+
+- (EventAction)kbToggleFileList:(id)param {
+    FileListPanel *panel = [FileListPanel sharedPanel];
+    panel.fileListDelegate = self;
+    [panel updateWithFiles:[myCurrentShow fileList] currentIndex:[myCurrentShow currentFileIndex]];
+    [panel toggle];
     return eReeval;
 }
 

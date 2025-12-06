@@ -30,7 +30,8 @@ NSString* displayers[]={
     @"Rotate 90\xC2\xB0 CW",
     @"Flip horizontal",
     @"Flip vertical",
-    @"Toggle comment window"
+    @"Toggle comment window",
+    @"Toggle file list"
 };
 
 NSString* selectors[sizeof displayers / sizeof *displayers];
@@ -139,6 +140,7 @@ static NSString* displayStringForKey(unichar key) {
         selectors[i++]=SEL2STR(kbFlipH:);
         selectors[i++]=SEL2STR(kbFlipV:);
         selectors[i++]=SEL2STR(kbToggleComments:);
+        selectors[i++]=SEL2STR(kbToggleFileList:);
         mySelectorDisplayStrings=[[NSDictionary alloc] initWithObjects:displayers
                                                                forKeys:selectors
                                                                  count:sizeof selectors/sizeof *selectors];
@@ -207,6 +209,7 @@ static NSString* displayStringForKey(unichar key) {
         [KeyBinding bindingWithKey:'e' action:@selector(kbRotateCW:)],
         [KeyBinding bindingWithKey:'h' action:@selector(kbFlipH:)],
         [KeyBinding bindingWithKey:'v' action:@selector(kbFlipV:)],
+        [KeyBinding bindingWithKey:'l' action:@selector(kbToggleFileList:)],
         NULL];
     [myTable reloadData];
 }

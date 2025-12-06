@@ -23,6 +23,7 @@
 #import "DefaultTransitionChooser.h"
 #import "MediaUtils.h"
 #import "ModernWindowController.h"
+#import "FileListPanel.h"
 
 NSString* const CancelShowException=@"CancelShow";
 
@@ -69,6 +70,7 @@ static NSColor* unarchive(NSData* data) {
 static Master* sharedMaster;
 static NSApplication* application;
 static ModernWindowController* modernWindowController;
+static NSInteger pendingFileJumpIndex = -1;  // For file list panel navigation
 
 static NSMutableArray* aliasIfNecessary(NSArray* array) {
     NSUserDefaults* prefs=[NSUserDefaults standardUserDefaults];
@@ -573,7 +575,22 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
             return eStop;
     }
     [application sendEvent:event];
+
+    // Check if file list panel requested a jump
+    if (pendingFileJumpIndex >= 0) {
+        NSInteger jumpIndex = pendingFileJumpIndex;
+        pendingFileJumpIndex = -1;
+        [myCurrentShow jumpToIndex:jumpIndex];
+        return ePrev;  // Causes main loop to advance to the jumped image
+    }
+
     return eNothing;
+}
+
+#pragma mark - FileListPanelDelegate
+
+- (void)fileListPanel:(id)panel didSelectFileAtIndex:(NSInteger)index {
+    pendingFileJumpIndex = index;
 }
 
 

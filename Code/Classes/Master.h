@@ -9,6 +9,7 @@
 #import "Procedural.h"
 #import "PetersTypes.h"
 #import "PrefsManager.h"
+#import "FileListPanel.h"
 
 #define HierarchyPBoardType @"HierarchyPBoardType"
 
@@ -27,7 +28,7 @@ typedef enum {
    eReeval //a horrible hack
 } EventAction;
 
-@interface Master : NSObject<NSApplicationDelegate> {
+@interface Master : NSObject<NSApplicationDelegate, FileListPanelDelegate> {
     id	myDisplayModeClass;
     BOOL myShouldLoop;
     BOOL myShouldRandomize;
