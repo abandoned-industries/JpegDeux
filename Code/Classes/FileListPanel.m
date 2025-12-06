@@ -19,9 +19,12 @@ static NSMutableDictionary *videoValidationCache = nil;
 @property (nonatomic, strong) NSButton *closeButton;
 @property (nonatomic, strong) NSTextField *titleLabel;
 @property (nonatomic, strong) NSVisualEffectView *backgroundView;
+@property (nonatomic, strong) NSButton *moviesOnlyCheckbox;
+@property (nonatomic, strong) NSArray *allFiles;  // All files before filtering
 @property (nonatomic, strong) NSArray *displayFiles;  // Filtered files for display
 @property (nonatomic, strong) NSArray *originalIndexMap;  // Maps display index -> original index
 @property (nonatomic, assign) NSInteger displayCurrentIndex;  // Current index in display array
+@property (nonatomic, assign) BOOL showMoviesOnly;
 @end
 
 @implementation FileListPanel
@@ -84,8 +87,20 @@ static NSMutableDictionary *videoValidationCache = nil;
     _backgroundView.state = NSVisualEffectStateActive;
     [contentView addSubview:_backgroundView];
 
-    // Create scroll view for table
-    NSRect scrollFrame = NSMakeRect(10, 10, contentView.bounds.size.width - 20, contentView.bounds.size.height - 20);
+    // Movies only checkbox at bottom
+    _moviesOnlyCheckbox = [NSButton checkboxWithTitle:@"Movies only" target:self action:@selector(moviesOnlyChanged:)];
+    _moviesOnlyCheckbox.frame = NSMakeRect(10, 10, 150, 20);
+    _moviesOnlyCheckbox.autoresizingMask = NSViewMaxYSizable;
+    [_moviesOnlyCheckbox setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
+    NSMutableAttributedString *attrTitle = [[NSMutableAttributedString alloc] initWithString:@"Movies only"];
+    [attrTitle addAttribute:NSForegroundColorAttributeName value:[NSColor whiteColor] range:NSMakeRange(0, attrTitle.length)];
+    [attrTitle addAttribute:NSFontAttributeName value:[NSFont systemFontOfSize:12] range:NSMakeRange(0, attrTitle.length)];
+    _moviesOnlyCheckbox.attributedTitle = attrTitle;
+    [_backgroundView addSubview:_moviesOnlyCheckbox];
+
+    // Create scroll view for table (above checkbox)
+    CGFloat checkboxHeight = 30;
+    NSRect scrollFrame = NSMakeRect(10, 10 + checkboxHeight, contentView.bounds.size.width - 20, contentView.bounds.size.height - 20 - checkboxHeight);
     _scrollView = [[NSScrollView alloc] initWithFrame:scrollFrame];
     _scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     _scrollView.hasVerticalScroller = YES;
@@ -158,7 +173,18 @@ static NSMutableDictionary *videoValidationCache = nil;
 
     for (NSInteger i = 0; i < (NSInteger)[files count]; i++) {
         NSString *path = files[i];
-        if ([self isFilePlayable:path]) {
+
+        // Check if file passes the filter
+        BOOL passesFilter = NO;
+        if (_showMoviesOnly) {
+            // Only show playable videos
+            passesFilter = [MediaUtils isVideoFile:path] && [self isFilePlayable:path];
+        } else {
+            // Show all playable files
+            passesFilter = [self isFilePlayable:path];
+        }
+
+        if (passesFilter) {
             if (i == currentIndex) {
                 newCurrentIndex = [filtered count];
             }
@@ -172,9 +198,17 @@ static NSMutableDictionary *videoValidationCache = nil;
     _displayCurrentIndex = newCurrentIndex;
 }
 
+- (void)moviesOnlyChanged:(id)sender {
+    _showMoviesOnly = ([_moviesOnlyCheckbox state] == NSControlStateValueOn);
+    [self filterFilesAndBuildMapping:_allFiles currentIndex:_currentIndex];
+    [_tableView reloadData];
+    [self highlightCurrentFile];
+}
+
 #pragma mark - Public Methods
 
 - (void)updateWithFiles:(NSArray *)files currentIndex:(NSInteger)index {
+    _allFiles = [files copy];  // Store for re-filtering when checkbox changes
     _currentIndex = index;
     [self filterFilesAndBuildMapping:files currentIndex:index];
     [_tableView reloadData];
