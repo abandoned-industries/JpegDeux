@@ -12,7 +12,7 @@
 @implementation ModernWindowController
 
 - (instancetype)initWithMaster:(Master *)master {
-    NSWindow *window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 700, 500)
+    NSWindow *window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 700, 580)
                                                    styleMask:NSWindowStyleMaskTitled |
                                                             NSWindowStyleMaskClosable |
                                                             NSWindowStyleMaskMiniaturizable |
@@ -20,7 +20,7 @@
                                                      backing:NSBackingStoreBuffered
                                                        defer:NO];
     window.title = @"JPEGDeux";
-    window.minSize = NSMakeSize(650, 450);
+    window.minSize = NSMakeSize(650, 550);
     [window setFrameAutosaveName:@"ModernMainWindow"];
 
     self = [super initWithWindow:window];
@@ -76,7 +76,7 @@
     [contentView addSubview:scalingCard];
 
     // Playback card
-    y -= (70 + cardSpacing);
+    y -= (150 + cardSpacing);  // Use Playback card's height (150), not Scaling's
     NSBox *playbackCard = [self createCardAtX:leftX y:y width:leftColumnWidth height:150 title:@"Playback"];
     _randomOrderButton.frame = NSMakeRect(16, 110, 120, 18);
     _loopButton.frame = NSMakeRect(150, 110, 60, 18);
@@ -105,7 +105,7 @@
     [contentView addSubview:playbackCard];
 
     // Appearance card
-    y -= (150 + cardSpacing);
+    y -= (50 + cardSpacing);  // Use Appearance card's height (50)
     NSBox *appearanceCard = [self createCardAtX:leftX y:y width:leftColumnWidth height:50 title:@"Appearance"];
     NSTextField *bgLabel = [NSTextField labelWithString:@"Background:"];
     bgLabel.frame = NSMakeRect(16, 12, 90, 17);
