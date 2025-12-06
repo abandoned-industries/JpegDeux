@@ -179,13 +179,22 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     myDisplayModeClass=classes[tag%numShowTypes];
     myShouldAutoAdvance=[dict boolForKey:@"ShouldAutoAdvance"];
     myScaling=[dict intForKey:@"ScalingMode"];
-    // Migrate legacy Force Fit scaling modes since they are no longer supported
+    myShouldOnlyScaleDown=[dict boolForKey:@"ShouldOnlyScaleDown"];
+
+    // Migrate legacy scaling modes to the simplified system
+    // UI only has ScaleNone and ScaleProportionally, with "Only scale down" checkbox
     if (myScaling == ScaleToFit) {
+        // Force to fit is deprecated - convert to proportional
         myScaling = ScaleProportionally;
     } else if (myScaling == ScaleDownToFit) {
-        myScaling = ScaleDownProportionally;
+        // Scale down to fit is deprecated - convert to proportional with only scale down
+        myScaling = ScaleProportionally;
+        myShouldOnlyScaleDown = YES;
+    } else if (myScaling == ScaleDownProportionally) {
+        // Scale down proportionally is now handled via checkbox
+        myScaling = ScaleProportionally;
+        myShouldOnlyScaleDown = YES;
     }
-    myShouldOnlyScaleDown=[dict boolForKey:@"ShouldOnlyScaleDown"];
     myFileNameDisplay=[dict intForKey:@"FileNameDisplayType"];
     myShouldRecursivelyScanSubdirectories=[dict boolForKey:@"ShouldRecursivelyScanSubdirectories"];
     myShouldPrecache=[dict boolForKey:@"PreloadImages"];
@@ -566,6 +575,10 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
 	}
 
         //NSLog(@"%f", [[NSDate date] timeIntervalSinceDate:date]); //used for timing shows
+
+        // End the slideshow - close display window and clean up
+        [myCurrentShow endShow];
+        myCurrentShow = nil;
 
         // Close file list panel when slideshow ends
         [[FileListPanel sharedPanel] orderOut:nil];

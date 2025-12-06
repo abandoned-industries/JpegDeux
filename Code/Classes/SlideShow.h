@@ -75,6 +75,9 @@
 
 - (void)preload;
 
+// Called when slideshow ends - subclasses should override to close windows and clean up
+- (void)endShow;
+
 // Smart caching - preloads next few images in background instead of all at once
 - (void)enableSmartCache;
 - (void)preloadNearbyImages;

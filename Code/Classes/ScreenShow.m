@@ -108,4 +108,21 @@
     return bytesPerPixel*screenSize.width*screenSize.height*[myChosenFiles count];
 }
 
+- (void)endShow {
+    // Stop any playing video
+    [myImageView stopVideo];
+
+    // Restore menu bar visibility
+    [NSMenu setMenuBarVisible:YES];
+
+    // Close the fullscreen window
+    [myCoveringWindow orderOut:self];
+    myCoveringWindow = nil;
+    myImageView = nil;
+    myContext = nil;
+
+    // Call parent cleanup
+    [super endShow];
+}
+
 @end

@@ -106,4 +106,17 @@
     return bytesPerPixel*windowSize.width*windowSize.height*[myChosenFiles count];
 }
 
+- (void)endShow {
+    // Stop any playing video
+    [myImageView stopVideo];
+
+    // Close the slideshow window
+    [myWindow orderOut:self];
+    myWindow = nil;
+    myImageView = nil;
+
+    // Call parent cleanup
+    [super endShow];
+}
+
 @end

@@ -385,6 +385,18 @@
 
 }
 
+- (void)endShow {
+    // Base implementation - clean up comment window if exists
+    if (myCommentWindow) {
+        [myCommentWindow orderOut:self];
+        myCommentWindow = nil;
+    }
+    // Clear cache
+    if (myImageCache) {
+        [myImageCache removeAllObjects];
+    }
+}
+
 - (long)estimatedSizeOfCachedImages {
     return 0;
 }

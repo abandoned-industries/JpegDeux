@@ -42,4 +42,12 @@ static NSImage* originalImage;
     return bytesPerPixel*128*128*[myChosenFiles count];
 }
 
+- (void)endShow {
+    // Restore the original dock icon
+    [application setApplicationIconImage:originalImage];
+
+    // Call parent cleanup
+    [super endShow];
+}
+
 @end

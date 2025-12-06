@@ -177,10 +177,23 @@
 }
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag {
-	
+
 	swap(myCoveringWindow, myOtherCoveringWindow);
     swap(myImageView, myOtherImageView);
-	
+
+}
+
+- (void)endShow {
+    // Stop any playing video in both views
+    [myOtherImageView stopVideo];
+
+    // Close the other window used for transitions
+    [myOtherCoveringWindow orderOut:self];
+    myOtherCoveringWindow = nil;
+    myOtherImageView = nil;
+
+    // Call parent cleanup (handles main covering window and menu bar)
+    [super endShow];
 }
 
 
