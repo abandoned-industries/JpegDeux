@@ -37,6 +37,7 @@ typedef enum {
     BOOL myShouldRecursivelyScanSubdirectories;
     BOOL myShouldPrecache;
     BOOL myShouldShowFileList;
+    BOOL myMoviesOnly;
     FileNameDisplay myFileNameDisplay;
     NSMutableArray* myChosenFiles;
     SlideShow* myCurrentShow;
@@ -67,6 +68,8 @@ typedef enum {
     IBOutlet BackgroundImageView* myPreview;
     IBOutlet NSButton* myDisplayCommentButton;
     IBOutlet NSDrawer* myTransitionDrawer;
+    IBOutlet NSButton* myShowFileListButton;
+    IBOutlet NSButton* myMoviesOnlyButton;
 }
 
 - (IBAction)selectFiles:(id)sender;
@@ -83,6 +86,7 @@ typedef enum {
 - (IBAction)setShouldPrecache:(id)sender;
 - (IBAction)setCommentDisplay:(id)sender;
 - (IBAction)setShowFileList:(id)sender;
+- (IBAction)setMoviesOnly:(id)sender;
 - (IBAction)begin:(id)sender;
 
 - (IBAction)sortName:(id)sender;

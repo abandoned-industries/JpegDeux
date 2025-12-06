@@ -133,6 +133,7 @@ static OSErr invalTrashContents(void);
 - (EventAction)kbToggleFileList:(id)param {
     FileListPanel *panel = [FileListPanel sharedPanel];
     panel.fileListDelegate = self;
+    [panel setShowMoviesOnly:myMoviesOnly];
     [panel updateWithFiles:[myCurrentShow fileList] currentIndex:[myCurrentShow currentFileIndex]];
     [panel toggle];
     return eReeval;

@@ -145,6 +145,8 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     [myFilesTable reloadData];
     [myPreview setImageScaling:myScaling];
     [myDisplayCommentButton setIntValue:myCommentDisplay];
+    [myShowFileListButton setIntValue:myShouldShowFileList];
+    [myMoviesOnlyButton setIntValue:myMoviesOnly];
     [myPreview setNeedsDisplay:YES];
 }
 
@@ -234,6 +236,8 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     myBackgroundColorWell = modernWindowController.backgroundColorWell;
     myShouldRecursivelyScanSubdirectoriesButton = modernWindowController.recursiveButton;
     myFilesTable = (NSOutlineView *)modernWindowController.filesTable;
+    myShowFileListButton = modernWindowController.showFileListButton;
+    myMoviesOnlyButton = modernWindowController.moviesOnlyButton;
 
     if (prefsDict) [self loadFromDictionary:prefsDict];
 
@@ -380,6 +384,13 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     myShouldShowFileList=[sender intValue];
 }
 
+- (IBAction)setMoviesOnly:(id)sender {
+    myMoviesOnly=[sender intValue];
+    // Update the file list panel filter if it's visible
+    FileListPanel *panel = [FileListPanel sharedPanel];
+    [panel setShowMoviesOnly:myMoviesOnly];
+}
+
 - (void)openSlideshow:(NSString*)path {
 	NSURL *url = [[NSURL alloc] initWithString:path];
 	[self openSlideshowWithUrl:url];
@@ -520,6 +531,7 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
         if (myShouldShowFileList) {
             FileListPanel *panel = [FileListPanel sharedPanel];
             panel.fileListDelegate = self;
+            [panel setShowMoviesOnly:myMoviesOnly];
             [panel updateWithFiles:[myCurrentShow fileList] currentIndex:[myCurrentShow currentFileIndex]];
             [panel makeKeyAndOrderFront:nil];
         }

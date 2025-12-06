@@ -90,7 +90,7 @@ static NSMutableDictionary *videoValidationCache = nil;
     // Movies only checkbox at bottom
     _moviesOnlyCheckbox = [NSButton checkboxWithTitle:@"Movies only" target:self action:@selector(moviesOnlyChanged:)];
     _moviesOnlyCheckbox.frame = NSMakeRect(10, 10, 150, 20);
-    _moviesOnlyCheckbox.autoresizingMask = NSViewMaxYSizable;
+    _moviesOnlyCheckbox.autoresizingMask = NSViewMaxYMargin;
     [_moviesOnlyCheckbox setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
     NSMutableAttributedString *attrTitle = [[NSMutableAttributedString alloc] initWithString:@"Movies only"];
     [attrTitle addAttribute:NSForegroundColorAttributeName value:[NSColor whiteColor] range:NSMakeRange(0, attrTitle.length)];
@@ -231,6 +231,16 @@ static NSMutableDictionary *videoValidationCache = nil;
     }
 }
 
+- (void)setShowMoviesOnly:(BOOL)moviesOnly {
+    _showMoviesOnly = moviesOnly;
+    [_moviesOnlyCheckbox setState:moviesOnly ? NSControlStateValueOn : NSControlStateValueOff];
+    if (_allFiles) {
+        [self filterFilesAndBuildMapping:_allFiles currentIndex:_currentIndex];
+        [_tableView reloadData];
+        [self highlightCurrentFile];
+    }
+}
+
 - (void)setCurrentIndex:(NSInteger)currentIndex {
     _currentIndex = currentIndex;
     // Update display current index by finding the original index in the map
@@ -343,8 +353,8 @@ static NSMutableDictionary *videoValidationCache = nil;
         return;
     }
 
-    // L or Escape closes the panel
-    if (key == 'l' || key == 'L' || key == 0x1B) {
+    // Tab or Escape closes the panel
+    if (key == '\t' || key == 0x1B) {
         [self orderOut:nil];
         return;
     }

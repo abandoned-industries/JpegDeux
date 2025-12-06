@@ -25,5 +25,6 @@
 - (void)updateWithFiles:(NSArray *)files currentIndex:(NSInteger)index;
 - (void)highlightCurrentFile;
 - (void)toggle;
+- (void)setShowMoviesOnly:(BOOL)moviesOnly;
 
 @end

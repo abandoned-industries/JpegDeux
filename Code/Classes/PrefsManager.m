@@ -209,7 +209,7 @@ static NSString* displayStringForKey(unichar key) {
         [KeyBinding bindingWithKey:'e' action:@selector(kbRotateCW:)],
         [KeyBinding bindingWithKey:'h' action:@selector(kbFlipH:)],
         [KeyBinding bindingWithKey:'v' action:@selector(kbFlipV:)],
-        [KeyBinding bindingWithKey:'l' action:@selector(kbToggleFileList:)],
+        [KeyBinding bindingWithKey:'\t' action:@selector(kbToggleFileList:)],
         NULL];
     [myTable reloadData];
 }

@@ -85,6 +85,7 @@
     _precacheButton.frame = NSMakeRect(16, 60, 100, 18);
     _displayCommentsButton.frame = NSMakeRect(130, 60, 140, 18);
     _showFileListButton.frame = NSMakeRect(220, 110, 90, 18);
+    _moviesOnlyButton.frame = NSMakeRect(200, 85, 110, 18);
 
     NSTextField *filenameLabel = [NSTextField labelWithString:@"Filename:"];
     filenameLabel.frame = NSMakeRect(16, 35, 70, 17);
@@ -98,6 +99,7 @@
     [playbackCard.contentView addSubview:_precacheButton];
     [playbackCard.contentView addSubview:_displayCommentsButton];
     [playbackCard.contentView addSubview:_showFileListButton];
+    [playbackCard.contentView addSubview:_moviesOnlyButton];
     [playbackCard.contentView addSubview:filenameLabel];
     [playbackCard.contentView addSubview:_filenameDisplayMatrix];
     [contentView addSubview:playbackCard];
@@ -241,6 +243,9 @@
 
     self.showFileListButton = [NSButton checkboxWithTitle:@"Show file list" target:self.master action:@selector(setShowFileList:)];
     self.showFileListButton.font = [NSFont systemFontOfSize:12];
+
+    self.moviesOnlyButton = [NSButton checkboxWithTitle:@"Movies only" target:self.master action:@selector(setMoviesOnly:)];
+    self.moviesOnlyButton.font = [NSFont systemFontOfSize:12];
 
     self.filenameDisplayMatrix = [[NSMatrix alloc] initWithFrame:NSZeroRect
                                                            mode:NSRadioModeMatrix
