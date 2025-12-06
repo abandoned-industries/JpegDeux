@@ -206,6 +206,11 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
                                                  name:NSApplicationWillTerminateNotification
                                                object:nil];
 
+    // Close the old NIB window if it exists
+    if (myWindow) {
+        [myWindow close];
+    }
+
     // Create modern UI
     modernWindowController = [[ModernWindowController alloc] initWithMaster:self];
 
