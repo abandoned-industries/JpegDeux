@@ -472,7 +472,20 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     NSMutableArray* arr=[[NSMutableArray alloc] init];
     long i, max=[myFileHierarchyArray count];
     for (i=0; i<max; i++) [arr addObjectsFromArray:[FileHierarchy flattenHierarchy:[myFileHierarchyArray objectAtIndex:i]]];
-    myChosenFiles=arr;
+
+    // Filter to movies only if checkbox is checked
+    if (myMoviesOnly) {
+        NSMutableArray *filtered = [[NSMutableArray alloc] init];
+        for (NSString *path in arr) {
+            if ([MediaUtils isVideoFile:path]) {
+                [filtered addObject:path];
+            }
+        }
+        myChosenFiles = filtered;
+    } else {
+        myChosenFiles = arr;
+    }
+
     if ([myChosenFiles count]==0) {
         NSBeep();
         return;

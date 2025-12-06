@@ -196,7 +196,7 @@
                                               cellClass:[NSButtonCell class]
                                            numberOfRows:1
                                         numberOfColumns:2];
-    self.scalingMatrix.cellSize = NSMakeSize(90, 20);
+    self.scalingMatrix.cellSize = NSMakeSize(120, 20);
     self.scalingMatrix.intercellSpacing = NSMakeSize(8, 0);
 
     NSButtonCell *noneCell = [self.scalingMatrix cellAtRow:0 column:0];

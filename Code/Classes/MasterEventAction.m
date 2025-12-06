@@ -139,6 +139,14 @@ static OSErr invalTrashContents(void);
     return eReeval;
 }
 
+- (EventAction)kbCycleFilename:(id)param {
+    // Cycle through: None (0) -> Name (1) -> Path (2) -> None (0)
+    myFileNameDisplay = (myFileNameDisplay + 1) % 3;
+    [myCurrentShow setFileNameDisplayType:myFileNameDisplay];
+    [myCurrentShow redisplay];
+    return eReeval;
+}
+
 @end
 
 
