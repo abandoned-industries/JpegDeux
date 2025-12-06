@@ -22,6 +22,7 @@
 #import "ImageWindowController.h"
 #import "DefaultTransitionChooser.h"
 #import "MediaUtils.h"
+#import "ModernWindowController.h"
 
 NSString* const CancelShowException=@"CancelShow";
 
@@ -67,6 +68,7 @@ static NSColor* unarchive(NSData* data) {
 
 static Master* sharedMaster;
 static NSApplication* application;
+static ModernWindowController* modernWindowController;
 
 static NSMutableArray* aliasIfNecessary(NSArray* array) {
     NSUserDefaults* prefs=[NSUserDefaults standardUserDefaults];
@@ -203,12 +205,31 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
                                              selector:@selector(noteSavePreferences:)
                                                  name:NSApplicationWillTerminateNotification
                                                object:nil];
+
+    // Create modern UI
+    modernWindowController = [[ModernWindowController alloc] initWithMaster:self];
+
+    // Wire up the outlets to the modern controls
+    myWindow = modernWindowController.window;
+    myDisplayModeMatrix = modernWindowController.displayModeMatrix;
+    myScalingMatrix = modernWindowController.scalingMatrix;
+    myShouldOnlyScaleDownButton = modernWindowController.onlyScaleDownButton;
+    myShouldLoopButton = modernWindowController.loopButton;
+    myShouldRandomizeButton = modernWindowController.randomOrderButton;
+    myShouldAutoAdvanceButton = modernWindowController.autoAdvanceButton;
+    myTimeIntervalField = modernWindowController.intervalField;
+    myShouldPrecacheButton = modernWindowController.precacheButton;
+    myDisplayFileNameMatrix = modernWindowController.filenameDisplayMatrix;
+    myBackgroundColorWell = modernWindowController.backgroundColorWell;
+    myShouldRecursivelyScanSubdirectoriesButton = modernWindowController.recursiveButton;
+    myFilesTable = (NSOutlineView *)modernWindowController.filesTable;
+
     if (prefsDict) [self loadFromDictionary:prefsDict];
-    if ([prefs boolForKey:@"PreviewDrawerIsOpen"])
-        [myDrawer performSelector:@selector(open:) withObject:nil afterDelay:0];
 
     [myFilesTable setTarget:self];
     [myFilesTable setDoubleAction:@selector(displayImageInWindow:)];
+
+    [myWindow makeKeyAndOrderFront:nil];
 }
 
 - (IBAction)selectFiles:(id)sender {

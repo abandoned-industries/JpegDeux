@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		MODERN01171A40A400528ABE /* ModernWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = MODERN02171A40A400528ABE /* ModernWindowController.m */; };
 		930E803417247A9C00291667 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930E803217247A9C00291667 /* Quartz.framework */; };
 		930E803517247A9C00291667 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930E803317247A9C00291667 /* QuartzCore.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		930E880617247A9C00291668 /* ImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 930E880517247A9C00291668 /* ImageLoader.m */; };
@@ -89,6 +90,8 @@
 		9396590A171A356F00286CB9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		93A273721DF78DD5000319F3 /* JpegDeux-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JpegDeux-Bridging-Header.h"; sourceTree = "<group>"; };
 		93A31A4E171A3E1F00528ABE /* Scaling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scaling.m; sourceTree = "<group>"; };
+		MODERN02171A40A400528ABE /* ModernWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModernWindowController.m; path = Classes/ModernWindowController.m; sourceTree = "<group>"; };
+		MODERN03171A40A400528ABE /* ModernWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModernWindowController.h; path = Classes/ModernWindowController.h; sourceTree = "<group>"; };
 		93A31A57171A40A400528ABE /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = JPEGDeux/en.lproj/DefaultTransitionView.nib; sourceTree = "<group>"; };
 		93A31A59171A40A400528ABE /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = JPEGDeux/en.lproj/ImageWindow.nib; sourceTree = "<group>"; };
 		93A31A5B171A40A400528ABE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = JPEGDeux/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -361,6 +364,8 @@
 				930E880B17247A9C00291669 /* MediaUtils.m */,
 				F5B3295D0200F14901FDC0B7 /* Master.h */,
 				F5B3295E0200F14901FDC0B7 /* Master.m */,
+				MODERN03171A40A400528ABE /* ModernWindowController.h */,
+				MODERN02171A40A400528ABE /* ModernWindowController.m */,
 				F53E929502EA3AE901549C9E /* MasterEventAction.h */,
 				F53E929402EA3AE901549C9E /* MasterEventAction.m */,
 				F512116E02DBECC4012CC1D9 /* MasterOutlineStuff.h */,
@@ -447,6 +452,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				MODERN01171A40A400528ABE /* ModernWindowController.m in Sources */,
 				93A31A3D171A3B4400528ABE /* PreviewImageView.m in Sources */,
 				93A31A3E171A3B4400528ABE /* WindowMovingTextField.m in Sources */,
 				93A31A3F171A3B4400528ABE /* BetterTable.m in Sources */,
