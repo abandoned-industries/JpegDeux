@@ -103,4 +103,33 @@
     return [self isImageFile:path] || [self isVideoFile:path];
 }
 
++ (BOOL)isVideoPlayable:(NSString *)path {
+    if (!path || ![self isVideoFile:path]) return NO;
+
+    NSURL *videoURL = [NSURL fileURLWithPath:path];
+    AVAsset *asset = [AVAsset assetWithURL:videoURL];
+
+    // Check if the asset is playable and has video tracks
+    if (![asset isPlayable]) return NO;
+
+    NSArray *videoTracks = [asset tracksWithMediaType:AVMediaTypeVideo];
+    if ([videoTracks count] == 0) return NO;
+
+    return YES;
+}
+
++ (BOOL)isMediaPlayable:(NSString *)path {
+    if (!path) return NO;
+
+    if ([self isImageFile:path]) {
+        // For images, just check if NSImage can load it
+        NSImage *image = [[NSImage alloc] initWithContentsOfFile:path];
+        return (image != nil && !NSEqualSizes([image size], NSZeroSize));
+    } else if ([self isVideoFile:path]) {
+        return [self isVideoPlayable:path];
+    }
+
+    return NO;
+}
+
 @end

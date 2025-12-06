@@ -28,4 +28,10 @@
 // Get supported video types
 + (NSArray<NSString *> *)supportedVideoTypes;
 
+// Check if a video file is actually playable by AVFoundation
++ (BOOL)isVideoPlayable:(NSString *)path;
+
+// Check if a media file (image or video) is valid and can be displayed
++ (BOOL)isMediaPlayable:(NSString *)path;
+
 @end
