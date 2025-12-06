@@ -68,8 +68,9 @@ static NSMutableDictionary *videoValidationCache = nil;
     // Remember position
     [self setFrameAutosaveName:@"FileListPanel"];
 
-    // Minimum size
+    // Size constraints - keep it compact
     [self setMinSize:NSMakeSize(200, 200)];
+    [self setMaxSize:NSMakeSize(400, 600)];
 }
 
 - (void)setupUI {
