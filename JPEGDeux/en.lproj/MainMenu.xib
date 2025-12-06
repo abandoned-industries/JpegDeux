@@ -302,7 +302,7 @@ CA
                 <outlet property="myWindow" destination="202" id="362"/>
             </connections>
         </customObject>
-        <window title="Slideshow" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" deferred="NO" releasedWhenClosed="NO" frameAutosaveName="MainWindow" animationBehavior="default" id="202" userLabel="Slideshow">
+        <window title="Slideshow" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" deferred="NO" visibleAtLaunch="NO" releasedWhenClosed="NO" frameAutosaveName="MainWindow" animationBehavior="default" id="202" userLabel="Slideshow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="55" y="413" width="578" height="411"/>
