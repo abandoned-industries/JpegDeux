@@ -259,10 +259,9 @@ static NSMutableDictionary *videoValidationCache = nil;
 - (void)tableDoubleClicked:(id)sender {
     NSInteger row = [_tableView clickedRow];
     if (row >= 0 && row < (NSInteger)[_displayFiles count]) {
-        // Map display index to original index
-        NSInteger originalIndex = [_originalIndexMap[row] integerValue];
-        if ([_fileListDelegate respondsToSelector:@selector(fileListPanel:didSelectFileAtIndex:)]) {
-            [_fileListDelegate fileListPanel:self didSelectFileAtIndex:originalIndex];
+        NSString *path = _displayFiles[row];
+        if ([_fileListDelegate respondsToSelector:@selector(fileListPanel:didSelectFilePath:)]) {
+            [_fileListDelegate fileListPanel:self didSelectFilePath:path];
         }
     }
 }
@@ -286,10 +285,9 @@ static NSMutableDictionary *videoValidationCache = nil;
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
     NSInteger row = [_tableView selectedRow];
     if (row >= 0 && row < (NSInteger)[_displayFiles count] && row != _displayCurrentIndex) {
-        // Map display index to original index
-        NSInteger originalIndex = [_originalIndexMap[row] integerValue];
-        if ([_fileListDelegate respondsToSelector:@selector(fileListPanel:didSelectFileAtIndex:)]) {
-            [_fileListDelegate fileListPanel:self didSelectFileAtIndex:originalIndex];
+        NSString *path = _displayFiles[row];
+        if ([_fileListDelegate respondsToSelector:@selector(fileListPanel:didSelectFilePath:)]) {
+            [_fileListDelegate fileListPanel:self didSelectFilePath:path];
         }
     }
 }
@@ -345,9 +343,9 @@ static NSMutableDictionary *videoValidationCache = nil;
     if (key == '\r' || key == 0x03) {
         NSInteger row = [_tableView selectedRow];
         if (row >= 0 && row < (NSInteger)[_displayFiles count]) {
-            NSInteger originalIndex = [_originalIndexMap[row] integerValue];
-            if ([_fileListDelegate respondsToSelector:@selector(fileListPanel:didSelectFileAtIndex:)]) {
-                [_fileListDelegate fileListPanel:self didSelectFileAtIndex:originalIndex];
+            NSString *path = _displayFiles[row];
+            if ([_fileListDelegate respondsToSelector:@selector(fileListPanel:didSelectFilePath:)]) {
+                [_fileListDelegate fileListPanel:self didSelectFilePath:path];
             }
         }
         return;

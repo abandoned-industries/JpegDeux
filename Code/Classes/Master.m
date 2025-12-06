@@ -70,7 +70,7 @@ static NSColor* unarchive(NSData* data) {
 static Master* sharedMaster;
 static NSApplication* application;
 static ModernWindowController* modernWindowController;
-static NSInteger pendingFileJumpIndex = -1;  // For file list panel navigation
+static NSString* pendingFileJumpPath = nil;  // For file list panel navigation
 
 static NSMutableArray* aliasIfNecessary(NSArray* array) {
     NSUserDefaults* prefs=[NSUserDefaults standardUserDefaults];
@@ -630,10 +630,10 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     [application sendEvent:event];
 
     // Check if file list panel requested a jump
-    if (pendingFileJumpIndex >= 0) {
-        NSInteger jumpIndex = pendingFileJumpIndex;
-        pendingFileJumpIndex = -1;
-        [myCurrentShow jumpToIndex:jumpIndex];
+    if (pendingFileJumpPath != nil) {
+        NSString *jumpPath = pendingFileJumpPath;
+        pendingFileJumpPath = nil;
+        [myCurrentShow jumpToPath:jumpPath];
         return ePrev;  // Causes main loop to advance to the jumped image
     }
 
@@ -642,8 +642,8 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
 
 #pragma mark - FileListPanelDelegate
 
-- (void)fileListPanel:(id)panel didSelectFileAtIndex:(NSInteger)index {
-    pendingFileJumpIndex = index;
+- (void)fileListPanel:(id)panel didSelectFilePath:(NSString *)path {
+    pendingFileJumpPath = path;
 }
 
 

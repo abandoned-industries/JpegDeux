@@ -490,4 +490,17 @@
     [self loadNextImage];
 }
 
+- (void)jumpToPath:(NSString *)path {
+    if (!path) return;
+
+    // Find the index of the file by path
+    for (NSInteger i = 0; i < (NSInteger)[myChosenFiles count]; i++) {
+        NSString *filePath = [myChosenFiles objectAtIndex:i];
+        if ([filePath isEqualToString:path]) {
+            [self jumpToIndex:i];
+            return;
+        }
+    }
+}
+
 @end

@@ -10,7 +10,7 @@
 @class SlideShow;
 
 @protocol FileListPanelDelegate <NSObject>
-- (void)fileListPanel:(id)panel didSelectFileAtIndex:(NSInteger)index;
+- (void)fileListPanel:(id)panel didSelectFilePath:(NSString *)path;
 @end
 
 @interface FileListPanel : NSPanel <NSTableViewDataSource, NSTableViewDelegate>
