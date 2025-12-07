@@ -20,11 +20,6 @@
                                     <action selector="orderFrontStandardAboutPanel:" target="-2" id="142"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Preferences..." id="129">
-                                <connections>
-                                    <action selector="editPrefs:" target="396" id="404"/>
-                                </connections>
-                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="143">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -152,11 +147,6 @@
                                     <action selector="showDialog:" target="667" id="670"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Toggle Preview Drawer" keyEquivalent="d" id="460">
-                                <connections>
-                                    <action selector="toggle:" target="449" id="461"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Remove All Images" id="620">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CA
@@ -169,82 +159,6 @@ CA
                                 <connections>
                                     <action selector="flattenImageHierarchy:" target="194" id="624"/>
                                 </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="642">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Toggle Transition Drawer" keyEquivalent="t" id="641">
-                                <connections>
-                                    <action selector="toggle:" target="639" id="643"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="629">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Reverse Image List" keyEquivalent="r" id="625">
-                                <connections>
-                                    <action selector="reverseAllImages:" target="194" id="627"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Reverse Selected Images" keyEquivalent="R" id="626">
-                                <connections>
-                                    <action selector="reverseSelectedImages:" target="194" id="628"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="587">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Sort All" id="588">
-                                <menu key="submenu" title="Sort All" id="589">
-                                    <items>
-                                        <menuItem title="by Name" id="595">
-                                            <connections>
-                                                <action selector="sortName:" target="194" id="605"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="by Number" id="604">
-                                            <connections>
-                                                <action selector="sortNumber:" target="194" id="606"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="by Date Modified" id="596">
-                                            <connections>
-                                                <action selector="sortModified:" target="194" id="607"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="by Date Created" id="597">
-                                            <connections>
-                                                <action selector="sortCreated:" target="194" id="608"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
-                            <menuItem title="Sort Selected" id="591">
-                                <menu key="submenu" title="Sort Selected" id="592">
-                                    <items>
-                                        <menuItem title="by Name" id="599">
-                                            <connections>
-                                                <action selector="sortSelectedName:" target="194" id="609"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="by Number" id="603">
-                                            <connections>
-                                                <action selector="sortSelectedNumber:" target="194" id="610"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="by Date Created" id="600">
-                                            <connections>
-                                                <action selector="sortSelectedCreated:" target="194" id="611"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="by Date Modified" id="601">
-                                            <connections>
-                                                <action selector="sortSelectedModified:" target="194" id="612"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
                             </menuItem>
                         </items>
                     </menu>
@@ -286,10 +200,7 @@ CA
                 <outlet property="myBackgroundColorWell" destination="464" id="466"/>
                 <outlet property="myDisplayFileNameMatrix" destination="347" id="353"/>
                 <outlet property="myDisplayModeMatrix" destination="204" id="271"/>
-                <outlet property="myDrawer" destination="449" id="457"/>
                 <outlet property="myFilesTable" destination="255" id="265"/>
-                <outlet property="myPrefsManager" destination="396" id="403"/>
-                <outlet property="myPreview" destination="455" id="456"/>
                 <outlet property="myScalingMatrix" destination="322" id="330"/>
                 <outlet property="myShouldAutoAdvanceButton" destination="277" id="278"/>
                 <outlet property="myShouldLoopButton" destination="211" id="270"/>
@@ -298,7 +209,6 @@ CA
                 <outlet property="myShouldRandomizeButton" destination="212" id="269"/>
                 <outlet property="myShouldRecursivelyScanSubdirectoriesButton" destination="357" id="358"/>
                 <outlet property="myTimeIntervalField" destination="213" id="272"/>
-                <outlet property="myTransitionDrawer" destination="639" id="644"/>
                 <outlet property="myWindow" destination="202" id="362"/>
             </connections>
         </customObject>
@@ -622,175 +532,6 @@ DQ
             </connections>
             <point key="canvasLocation" x="139" y="-132.5"/>
         </window>
-        <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="373" userLabel="Preferences">
-            <windowStyleMask key="styleMask" titled="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="199" y="340" width="380" height="473"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
-            <value key="minSize" type="size" width="213" height="107"/>
-            <view key="contentView" id="374">
-                <rect key="frame" x="0.0" y="0.0" width="380" height="473"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <scrollView horizontalLineScroll="26" horizontalPageScroll="10" verticalLineScroll="26" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" findBarPosition="aboveHorizontalRuler" id="376">
-                        <rect key="frame" x="34" y="122" width="313" height="351"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <clipView key="contentView" id="miG-et-kCI">
-                            <rect key="frame" x="1" y="0.0" width="311" height="350"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" headerView="715" floatsGroupRows="NO" id="377" customClass="KeyBindingTable">
-                                    <rect key="frame" x="0.0" y="0.0" width="311" height="327"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <size key="intercellSpacing" width="3" height="2"/>
-                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
-                                    <tableColumns>
-                                        <tableColumn identifier="key" editable="NO" width="67" minWidth="40" maxWidth="1000" id="375">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Key">
-                                                <font key="font" metaFont="smallSystem"/>
-                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            </tableHeaderCell>
-                                            <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="center" id="710">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </textFieldCell>
-                                        </tableColumn>
-                                        <tableColumn identifier="action" width="223" minWidth="42.101001739501953" maxWidth="1000" id="378">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Action">
-                                                <font key="font" metaFont="smallSystem"/>
-                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            </tableHeaderCell>
-                                            <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="711">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </textFieldCell>
-                                        </tableColumn>
-                                    </tableColumns>
-                                    <connections>
-                                        <outlet property="dataSource" destination="396" id="405"/>
-                                        <outlet property="delegate" destination="396" id="410"/>
-                                    </connections>
-                                </tableView>
-                            </subviews>
-                        </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="714">
-                            <rect key="frame" x="-100" y="-100" width="420" height="15"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="716">
-                            <rect key="frame" x="296" y="23" width="16" height="327"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </scroller>
-                        <tableHeaderView key="headerView" id="715">
-                            <rect key="frame" x="0.0" y="0.0" width="311" height="23"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </tableHeaderView>
-                    </scrollView>
-                    <button verticalHuggingPriority="750" id="379">
-                        <rect key="frame" x="14" y="12" width="152" height="32"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="push" title="Revert to defaults" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="701">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="revertToDefaults:" target="396" id="397"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" id="380">
-                        <rect key="frame" x="282" y="12" width="84" height="32"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="702">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="OK:" target="396" id="399"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" id="381">
-                        <rect key="frame" x="198" y="12" width="84" height="32"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="703">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="cancel:" target="396" id="398"/>
-                        </connections>
-                    </button>
-                    <textField verticalHuggingPriority="750" id="407">
-                        <rect key="frame" x="64" y="60" width="268" height="14"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Hit any key to change the binding for this action" id="704">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button verticalHuggingPriority="750" id="409">
-                        <rect key="frame" x="132" y="74" width="117" height="32"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="push" title="Add Binding" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="705">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="addKeyBinding:" target="396" id="411"/>
-                        </connections>
-                    </button>
-                </subviews>
-            </view>
-            <connections>
-                <outlet property="delegate" destination="396" id="402"/>
-            </connections>
-        </window>
-        <customObject id="396" userLabel="PrefsManager" customClass="PrefsManager">
-            <connections>
-                <outlet property="myFieldInstructions" destination="407" id="408"/>
-                <outlet property="myTable" destination="377" id="400"/>
-                <outlet property="myWindow" destination="373" id="401"/>
-            </connections>
-        </customObject>
-        <customView id="448" userLabel="PreviewView">
-            <rect key="frame" x="0.0" y="0.0" width="250" height="300"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <subviews>
-                <customView id="455" customClass="PreviewImageView">
-                    <rect key="frame" x="0.0" y="0.0" width="250" height="300"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                </customView>
-            </subviews>
-        </customView>
-        <drawer trailingOffset="15" id="449" userLabel="PreviewDrawer">
-            <size key="contentSize" width="200" height="200"/>
-            <size key="minContentSize" width="50" height="50"/>
-            <size key="maxContentSize" width="600" height="400"/>
-            <connections>
-                <outlet property="contentView" destination="448" id="451"/>
-                <outlet property="delegate" destination="194" id="453"/>
-                <outlet property="parentWindow" destination="202" id="452"/>
-            </connections>
-        </drawer>
-        <drawer preferredEdge="minX" trailingOffset="15" id="639" userLabel="TransitionDrawer">
-            <size key="contentSize" width="200" height="200"/>
-            <size key="minContentSize" width="50" height="50"/>
-            <size key="maxContentSize" width="600" height="400"/>
-            <connections>
-                <outlet property="parentWindow" destination="202" id="640"/>
-            </connections>
-        </drawer>
         <customObject id="667" userLabel="NetImageAdder" customClass="NetImageAdder">
             <connections>
                 <outlet property="myMaster" destination="194" id="668"/>
