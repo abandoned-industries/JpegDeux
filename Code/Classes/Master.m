@@ -647,6 +647,10 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
 }
 
 
+- (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
+    return YES;
+}
+
 - (BOOL)application:(NSApplication*)theApplication openFile:(NSString*)filename {
     NSFileManager* filer=[NSFileManager defaultManager];
 

@@ -12,7 +12,24 @@
 @implementation MediaUtils
 
 + (NSArray<NSString *> *)supportedImageTypes {
-    return [NSImage imageTypes];
+    // Filter out problematic types from NSImage's list
+    // PDFs cause errors when loaded in slideshows
+    // Some UTIs don't exist on all macOS versions
+    NSSet *excludedTypes = [NSSet setWithArray:@[
+        @"com.adobe.pdf",
+        @"com.apple.atx",
+        @"org.khronos.ktx2",
+        @"public.avis",
+        @"com.microsoft.cur"
+    ]];
+
+    NSMutableArray *filteredTypes = [NSMutableArray array];
+    for (NSString *type in [NSImage imageTypes]) {
+        if (![excludedTypes containsObject:type]) {
+            [filteredTypes addObject:type];
+        }
+    }
+    return filteredTypes;
 }
 
 + (NSArray<NSString *> *)supportedVideoTypes {
@@ -42,6 +59,11 @@
 
     NSString *extension = [[path pathExtension] lowercaseString];
 
+    // Explicitly exclude PDFs - they cause loading errors in slideshows
+    if ([extension isEqualToString:@"pdf"]) {
+        return NO;
+    }
+
     // Quick check for common image extensions
     NSSet *imageExtensions = [NSSet setWithArray:@[
         @"jpg", @"jpeg", @"png", @"gif", @"bmp", @"tiff", @"tif",
@@ -59,6 +81,10 @@
     [url getResourceValue:&uti forKey:NSURLTypeIdentifierKey error:nil];
 
     if (uti) {
+        // Exclude PDF UTI
+        if (UTTypeConformsTo((__bridge CFStringRef)uti, kUTTypePDF)) {
+            return NO;
+        }
         for (NSString *imageType in [self supportedImageTypes]) {
             if (UTTypeConformsTo((__bridge CFStringRef)uti, (__bridge CFStringRef)imageType)) {
                 return YES;
