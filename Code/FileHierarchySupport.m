@@ -46,19 +46,26 @@ static void flattenHierarchy(id hierarchy, NSMutableArray* array) {
                 filePath = [filePath resolveAliasesIsDir:&fileIsDir];
                 
                 id innerHierarchy;
-                if (fileIsDir && recursive) {
-                    innerHierarchy = [self hierarchyWithPath:filePath recursive:recursive];
-                    // only add the inner directory if it has files in it
-                    if (innerHierarchy) {
-                        NSMutableArray* innerDirectory = (NSMutableArray*)innerHierarchy;
-                        if ([innerDirectory count] == 2) {
-                            if ([(NSMutableArray*)innerDirectory[1] count] > 0) {
-                                [hierarchyContents addObject:innerHierarchy];
+                if (fileIsDir) {
+                    if (recursive) {
+                        innerHierarchy = [self hierarchyWithPath:filePath recursive:recursive];
+                        // only add the inner directory if it has files in it
+                        if (innerHierarchy) {
+                            NSMutableArray* innerDirectory = (NSMutableArray*)innerHierarchy;
+                            if ([innerDirectory count] == 2) {
+                                if ([(NSMutableArray*)innerDirectory[1] count] > 0) {
+                                    [hierarchyContents addObject:innerHierarchy];
+                                }
                             }
                         }
+                    } else {
+                        // Non-recursive: still show subdirectories but don't scan their contents
+                        NSMutableArray* emptyDir = [NSMutableArray arrayWithCapacity:2];
+                        [emptyDir addObject:filePath];
+                        [emptyDir addObject:[NSMutableArray array]];
+                        [hierarchyContents addObject:emptyDir];
                     }
-                    
-                } else if (!fileIsDir) {
+                } else {
                     innerHierarchy = [self hierarchyWithPath:filePath recursive:recursive];
 
                     if (innerHierarchy) {
