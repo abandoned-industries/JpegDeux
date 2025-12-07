@@ -37,14 +37,11 @@ This is a modernized fork of JPEGDeux, updated for Apple Silicon and modern macO
 |===
 |Key |Action
 
-|Space |Next image/video
-|Backspace |Previous image/video
-|Tab |Open file list panel
-|P |Show current file pathname
-|R |Rotate counter-clockwise
-|E |Rotate clockwise
-|H |Flip horizontal
-|V |Flip vertical
+|Right Arrow |Next image/video
+|Left Arrow |Previous image/video
+|Space |Toggle auto-advance
+|Tab |Toggle file list panel
+|P |Cycle filename display
 |Escape / Cmd+. |End slideshow
 |===
 

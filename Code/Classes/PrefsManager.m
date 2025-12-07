@@ -207,18 +207,12 @@ static NSString* displayStringForKey(unichar key) {
 }
 
 - (IBAction)revertToDefaults:(id)sender {
+    // Only include keybindings that actually work
     myKeyBindings=[[NSMutableArray alloc] initWithObjects:
         [KeyBinding bindingWithKey:NSRightArrowFunctionKey action:@selector(kbNextPic:)],
         [KeyBinding bindingWithKey:NSLeftArrowFunctionKey action:@selector(kbPrevPic:)],
         [KeyBinding bindingWithKey:EscapeKey action:@selector(kbEndShow:)],
         [KeyBinding bindingWithKey:' ' action:@selector(kbToggleAdvance:)],
-        [KeyBinding bindingWithKey:'+' action:@selector(kbIncreaseSpeed:)],
-        [KeyBinding bindingWithKey:'-' action:@selector(kbDecreaseSpeed:)],
-        [KeyBinding bindingWithKey:'d' action:@selector(kbMoveToTrash:)],
-        [KeyBinding bindingWithKey:'r' action:@selector(kbRotateCCW:)],
-        [KeyBinding bindingWithKey:'e' action:@selector(kbRotateCW:)],
-        [KeyBinding bindingWithKey:'h' action:@selector(kbFlipH:)],
-        [KeyBinding bindingWithKey:'v' action:@selector(kbFlipV:)],
         [KeyBinding bindingWithKey:'\t' action:@selector(kbToggleFileList:)],
         [KeyBinding bindingWithKey:'p' action:@selector(kbCycleFilename:)],
         NULL];
