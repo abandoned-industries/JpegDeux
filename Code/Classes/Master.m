@@ -219,6 +219,11 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
                                                  name:NSApplicationWillTerminateNotification
                                                object:nil];
 
+    // Ensure PrefsManager is initialized (may not come from NIB)
+    if (!myPrefsManager) {
+        myPrefsManager = [[PrefsManager alloc] init];
+    }
+
     // Create modern UI
     modernWindowController = [[ModernWindowController alloc] initWithMaster:self];
 

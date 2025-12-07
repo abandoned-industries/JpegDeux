@@ -91,6 +91,14 @@ static NSString* displayStringForKey(unichar key) {
 
 @implementation PrefsManager
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        [self loadPrefs];
+    }
+    return self;
+}
+
 - (void)loadPrefs {
     NSUserDefaults* prefs=[NSUserDefaults standardUserDefaults];
     NSData* defs;
