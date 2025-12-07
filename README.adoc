@@ -1,4 +1,6 @@
-== JpegDeux
+== JpegDeux for Apple Silicon
+
+Fork of https://github.com/teacurran/JpegDeux, updated for Apple Silicon using Claude Code (Opus 4.5), December 2025. 
 
 Fork of JPEGDeux found on SourceForge here: +
 http://sourceforge.net/projects/jpegdeux/
