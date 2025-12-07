@@ -142,24 +142,6 @@
                                     <action selector="selectFiles:" target="194" id="576"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Add Online Images..." keyEquivalent="I" id="669">
-                                <connections>
-                                    <action selector="showDialog:" target="667" id="670"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Remove All Images" id="620">
-                                <string key="keyEquivalent" base64-UTF8="YES">
-CA
-</string>
-                                <connections>
-                                    <action selector="removeAllImages:" target="194" id="622"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Flatten Image Hierarchy" keyEquivalent="f" id="623">
-                                <connections>
-                                    <action selector="flattenImageHierarchy:" target="194" id="624"/>
-                                </connections>
-                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -532,10 +514,5 @@ DQ
             </connections>
             <point key="canvasLocation" x="139" y="-132.5"/>
         </window>
-        <customObject id="667" userLabel="NetImageAdder" customClass="NetImageAdder">
-            <connections>
-                <outlet property="myMaster" destination="194" id="668"/>
-            </connections>
-        </customObject>
     </objects>
 </document>
