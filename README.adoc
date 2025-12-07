@@ -1,18 +1,147 @@
-== JpegDeux for Apple Silicon
+= JpegDeux 2.0 for Apple Silicon
 
-Fork of https://github.com/teacurran/JpegDeux, updated for Apple Silicon using Claude Code (Opus 4.5), December 2025. 
+A macOS slideshow application for viewing images and videos with transitions, sorting, and customizable keybindings.
 
-Fork of JPEGDeux found on SourceForge here: +
-http://sourceforge.net/projects/jpegdeux/
+== About
 
-The sourceforge page appears to be dead and doesn't work on any version of OSX
-greater than 10.6.
+This is a modernized fork of JPEGDeux, updated for Apple Silicon and modern macOS using Claude Code (Opus 4), December 2025.
 
-This fork will build and work on OSX 10.7+
+**Fork lineage:**
 
-=== Download
+1. Original: http://sourceforge.net/projects/jpegdeux/[SourceForge JPEGDeux] (no longer maintained, macOS 10.6 and earlier)
+2. First fork: https://github.com/teacurran/JpegDeux[teacurran/JpegDeux] (updated for macOS 10.7-10.8)
+3. This fork: Updated for Apple Silicon and macOS 10.13+ with video support
 
-A compiled binary for this application can be downloaded here: +
-http://www.wirelust.com/2013/04/14/jpegdeux-updated-for-osx-10-8/
+== Features
 
+* Full-screen and windowed slideshow modes
+* **Video playback support** (MP4, MOV, M4V, AVI, and more)
+* Multiple transition effects (crossfade, scroll, etc.)
+* Modern card-based UI layout
+* Quick file picker panel during slideshow (Tab key)
+* Movies-only filter option
+* Customizable keybindings for slideshow control
+* Image sorting (by name, date modified, date created, or number)
+* Image rotation and flipping during slideshow
+* Hierarchical folder support with drag and drop
+* Move/copy images to folders during viewing
+* Custom background colors
+* Smart image caching for improved performance
+* High-quality image upscaling with trilinear filtering
+* Support for animated GIFs
+* JPEG comment display
+* Online image sequence support
 
+== Keyboard Shortcuts (During Slideshow)
+
+|===
+|Key |Action
+
+|Space |Next image/video
+|Backspace |Previous image/video
+|Tab |Open file list panel
+|P |Show current file pathname
+|R |Rotate counter-clockwise
+|E |Rotate clockwise
+|H |Flip horizontal
+|V |Flip vertical
+|Escape / Cmd+. |End slideshow
+|===
+
+== Changes in Version 2.0
+
+=== New Features
+
+==== Video Playback Support
+* Play MP4, MOV, M4V, AVI, and other video formats in slideshows
+* Video playback controls during slideshow
+* Automatic skipping of unplayable video files
+* Movies-only filter to show only video files
+
+==== Modern UI
+* New programmatic card-based UI layout
+* Larger main window with better organized controls
+* Quick file picker panel (Tab key) for jumping to specific files during slideshow
+* Cleaner preferences and menu structure
+
+==== Performance Improvements
+* Smart image caching for smoother slideshows
+* Trilinear filtering for high-quality image upscaling
+* Better memory management
+
+=== Code Modernization
+
+==== Apple Silicon & Modern macOS Support
+* Native Apple Silicon (M1/M2/M3) support
+* Requires macOS 10.13 (High Sierra) or later
+* Updated to Xcode 15 project settings
+
+==== Swift 5 Compatibility
+* Modernized enums for Swift 5 interoperability
+* Updated test suite for Swift 5
+
+==== Deprecated API Cleanup
+* Removed deprecated Carbon framework imports
+* Removed deprecated ApplicationServices imports
+* Replaced `useOptimizedDrawing` (deprecated)
+* Fixed `NSEvent` context deprecations
+* Updated `NSArchiver` to handle legacy preferences format
+* Fixed framework paths for modern macOS SDK
+
+=== Removed Features
+
+The following legacy features were removed as they no longer work on modern macOS:
+
+* **Force Fit scaling option** - Removed from UI
+* **QuickTime-based shows** - Replaced with AVFoundation
+* **Direct Display show mode** - No longer supported
+* **Various non-functional menu items** - Cleaned up Slideshow menu
+* **Deprecated preferences** - Removed non-working options
+
+=== Bug Fixes
+
+* Fixed crash on nil color when loading legacy preferences
+* Fixed file list clicking wrong item by using file paths instead of indices
+* Fixed Scaling card being hidden by overlapping Playback card
+* Fixed slideshow window not closing properly
+* Fixed scaling options migration from old preferences
+* Fixed image scaling calculations in BackgroundImageView
+* Fixed app crash on startup with corrupted preferences
+
+== Building
+
+Requirements:
+
+* Xcode 15 or later
+* macOS 10.13+ SDK
+
+To build:
+
+1. Open `JPEGDeux.xcodeproj` in Xcode
+2. Select your signing team in project settings
+3. Build (Cmd+B) or Run (Cmd+R)
+
+== Version History
+
+=== 2.0a1 (December 2025)
+* Apple Silicon support
+* Video playback support
+* Modern UI overhaul
+* macOS 10.13+ compatibility
+* Numerous bug fixes and deprecated API cleanup
+
+=== 1.9.x (Previous fork)
+* macOS 10.7-10.8 support
+* ARC conversion
+* Basic modernization
+
+=== 1.8 and earlier
+* See `Version History.rtf` for original changelog
+
+== License
+
+Modified BSD License. See `license.txt` for details.
+
+Copyright © 2001-2013 Peter Ammon (original author) +
+Modifications © 2013 Terrence Curran +
+Modifications © 2025 Claude Code
