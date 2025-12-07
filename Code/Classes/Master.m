@@ -568,20 +568,21 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
                 EventAction action;
                 shouldContinue=[myCurrentShow advanceImage:&timeOfDisplay];
 
+            reeval:
 				action=eNothing;
                 if (myShouldAutoAdvance) {
 					finishDate=[NSDate dateWithTimeIntervalSinceReferenceDate: myTimeInterval + timeOfDisplay];
 				} else {
 					finishDate=[NSDate distantFuture];
 				}
-				
+
                 do {
                     event=[application nextEventMatchingMask: NSEventMaskAny
                                                    untilDate:finishDate
                                                       inMode:NSDefaultRunLoopMode
                                                      dequeue:YES];
                 } while (event && !(action=[self handleEvent:event]));
-				
+
                 switch (action) {
                     case eStop:
 						myShouldLoop=NO;
@@ -591,9 +592,8 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
                         shouldContinue=YES;
                         break;
                     case eReeval:
-                        //pool=[[NSAutoreleasePool alloc] init];
-                        //goto reeval;
-						break;
+                        // Recalculate wait time without advancing image (for pause toggle)
+                        goto reeval;
                     default: ;//this ought to shut gcc up
                 }
             }
