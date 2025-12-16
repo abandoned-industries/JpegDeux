@@ -24,6 +24,7 @@
 #import "MediaUtils.h"
 #import "ModernWindowController.h"
 #import "FileListPanel.h"
+#import "ImageLoader.h"
 
 NSString* const CancelShowException=@"CancelShow";
 
@@ -147,6 +148,7 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     [myDisplayCommentButton setIntValue:myCommentDisplay];
     [myShowFileListButton setIntValue:myShouldShowFileList];
     [myMoviesOnlyButton setIntValue:myMoviesOnly];
+    [mySkipICloudFilesButton setIntValue:myShouldSkipICloudFiles];
     [myPreview setNeedsDisplay:YES];
 }
 
@@ -163,6 +165,7 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     [dict setInt:myFileNameDisplay forKey:@"FileNameDisplayType"];
     [dict setBool:myShouldRecursivelyScanSubdirectories forKey:@"ShouldRecursivelyScanSubdirectories"];
     [dict setBool:myShouldPrecache forKey:@"PreloadImages"];
+    [dict setBool:myShouldSkipICloudFiles forKey:@"ShouldSkipICloudFiles"];
     // [dict setObject:aliasIfNecessary(myFileHierarchyArray) forKey:@"ChosenFiles"];
     dict[@"BackgroundColor"] = archive(myBackgroundColor);
     [dict setInt:myCommentDisplay forKey:@"CommentDisplay"];
@@ -200,6 +203,8 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     myFileNameDisplay=[dict intForKey:@"FileNameDisplayType"];
     myShouldRecursivelyScanSubdirectories=[dict boolForKey:@"ShouldRecursivelyScanSubdirectories"];
     myShouldPrecache=[dict boolForKey:@"PreloadImages"];
+    // Default to YES (skip iCloud files) if not set
+    myShouldSkipICloudFiles = dict[@"ShouldSkipICloudFiles"] ? [dict boolForKey:@"ShouldSkipICloudFiles"] : YES;
     myCommentDisplay=[dict intForKey:@"CommentDisplay"];
     oldFiles= dict[@"ChosenFiles"];
     myBackgroundColor=unarchive(dict[@"BackgroundColor"]);
@@ -243,6 +248,7 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     myFilesTable = (NSOutlineView *)modernWindowController.filesTable;
     myShowFileListButton = modernWindowController.showFileListButton;
     myMoviesOnlyButton = modernWindowController.moviesOnlyButton;
+    mySkipICloudFilesButton = modernWindowController.skipICloudFilesButton;
 
     if (prefsDict) [self loadFromDictionary:prefsDict];
 
@@ -396,6 +402,10 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     [panel setShowMoviesOnly:myMoviesOnly];
 }
 
+- (IBAction)setSkipICloudFiles:(id)sender {
+    myShouldSkipICloudFiles=[sender intValue];
+}
+
 - (void)openSlideshow:(NSString*)path {
 	NSURL *url = [[NSURL alloc] initWithString:path];
 	[self openSlideshowWithUrl:url];
@@ -499,6 +509,7 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
 	myBackgroundColor = [myBackgroundColorWell color];
 
     [self savePreferenceSettings];
+    [ImageLoader setSkipICloudFiles:myShouldSkipICloudFiles];
     myCurrentShow=[[myDisplayModeClass alloc] initWithParams:[myTransitionChooser valueDictionary]];
     NS_DURING
 	
@@ -567,6 +578,9 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
                 CFAbsoluteTime timeOfDisplay;
                 EventAction action;
                 shouldContinue=[myCurrentShow advanceImage:&timeOfDisplay];
+
+                // Update file list panel selection
+                [[FileListPanel sharedPanel] setCurrentIndex:[myCurrentShow currentFileIndex]];
 
             reeval:
 				action=eNothing;
@@ -746,6 +760,13 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     else if (action==@selector(redo:)) {
         return [myUndoer canRedo];
     }
+    else if (action==@selector(rotateImageCW:) ||
+             action==@selector(rotateImageCCW:) ||
+             action==@selector(flipImageH:) ||
+             action==@selector(flipImageV:) ||
+             action==@selector(moveImageToTrash:)) {
+        return myCurrentShow != nil;
+    }
     else return YES;//[super validateMenuItem:menuItem];
 }
 
@@ -901,6 +922,53 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
 
 - (IBAction)closeWindow:(id)sender {
     [myWindow orderOut:self];
+}
+
+#pragma mark - Slideshow Menu Actions
+
+- (IBAction)rotateImageCW:(id)sender {
+    if (myCurrentShow) {
+        [myCurrentShow rotate:3];
+        [myCurrentShow redisplay];
+    }
+}
+
+- (IBAction)rotateImageCCW:(id)sender {
+    if (myCurrentShow) {
+        [myCurrentShow rotate:1];
+        [myCurrentShow redisplay];
+    }
+}
+
+- (IBAction)flipImageH:(id)sender {
+    if (myCurrentShow) {
+        [myCurrentShow flipHorizontal];
+        [myCurrentShow redisplay];
+    }
+}
+
+- (IBAction)flipImageV:(id)sender {
+    if (myCurrentShow) {
+        [myCurrentShow flipVertical];
+        [myCurrentShow redisplay];
+    }
+}
+
+- (IBAction)moveImageToTrash:(id)sender {
+    if (myCurrentShow) {
+        NSString* path = [myCurrentShow currentPath];
+        if ([path length]) {
+            NSURL *fileURL = [NSURL fileURLWithPath:path];
+            NSError *error = nil;
+            if ([[NSFileManager defaultManager] trashItemAtURL:fileURL
+                                              resultingItemURL:nil
+                                                         error:&error]) {
+                [[NSSound soundNamed:@"trash"] play];
+            } else {
+                NSBeep();
+            }
+        }
+    }
 }
 
 @end

@@ -210,7 +210,9 @@ static NSString* displayStringForKey(unichar key) {
     // Only include keybindings that actually work
     myKeyBindings=[[NSMutableArray alloc] initWithObjects:
         [KeyBinding bindingWithKey:NSRightArrowFunctionKey action:@selector(kbNextPic:)],
+        [KeyBinding bindingWithKey:NSDownArrowFunctionKey action:@selector(kbNextPic:)],
         [KeyBinding bindingWithKey:NSLeftArrowFunctionKey action:@selector(kbPrevPic:)],
+        [KeyBinding bindingWithKey:NSUpArrowFunctionKey action:@selector(kbPrevPic:)],
         [KeyBinding bindingWithKey:EscapeKey action:@selector(kbEndShow:)],
         [KeyBinding bindingWithKey:' ' action:@selector(kbToggleAdvance:)],
         [KeyBinding bindingWithKey:'\t' action:@selector(kbToggleFileList:)],

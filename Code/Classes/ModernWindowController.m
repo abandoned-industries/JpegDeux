@@ -76,21 +76,22 @@
     [contentView addSubview:scalingCard];
 
     // Playback card
-    y -= (150 + cardSpacing);  // Use Playback card's height (150), not Scaling's
-    NSBox *playbackCard = [self createCardAtX:leftX y:y width:leftColumnWidth height:150 title:@"Playback"];
-    _randomOrderButton.frame = NSMakeRect(16, 110, 120, 18);
-    _loopButton.frame = NSMakeRect(150, 110, 60, 18);
-    _showFileListButton.frame = NSMakeRect(230, 110, 120, 18);
-    _autoAdvanceButton.frame = NSMakeRect(16, 85, 115, 18);
-    _intervalField.frame = NSMakeRect(135, 83, 50, 22);
-    _moviesOnlyButton.frame = NSMakeRect(230, 85, 120, 18);
-    _precacheButton.frame = NSMakeRect(16, 60, 100, 18);
-    _displayCommentsButton.frame = NSMakeRect(135, 60, 140, 18);
+    y -= (170 + cardSpacing);  // Use Playback card's height (170), not Scaling's
+    NSBox *playbackCard = [self createCardAtX:leftX y:y width:leftColumnWidth height:170 title:@"Playback"];
+    _randomOrderButton.frame = NSMakeRect(16, 130, 120, 18);
+    _loopButton.frame = NSMakeRect(150, 130, 60, 18);
+    _showFileListButton.frame = NSMakeRect(230, 130, 120, 18);
+    _autoAdvanceButton.frame = NSMakeRect(16, 105, 115, 18);
+    _intervalField.frame = NSMakeRect(135, 103, 50, 22);
+    _moviesOnlyButton.frame = NSMakeRect(230, 105, 120, 18);
+    _precacheButton.frame = NSMakeRect(16, 80, 100, 18);
+    _displayCommentsButton.frame = NSMakeRect(135, 80, 140, 18);
+    _skipICloudFilesButton.frame = NSMakeRect(16, 55, 230, 18);
 
     NSTextField *filenameLabel = [NSTextField labelWithString:@"Filename:"];
-    filenameLabel.frame = NSMakeRect(16, 35, 70, 17);
+    filenameLabel.frame = NSMakeRect(16, 30, 70, 17);
     filenameLabel.font = [NSFont systemFontOfSize:12];
-    _filenameDisplayMatrix.frame = NSMakeRect(16, 8, 360, 22);
+    _filenameDisplayMatrix.frame = NSMakeRect(16, 3, 360, 22);
 
     [playbackCard.contentView addSubview:_randomOrderButton];
     [playbackCard.contentView addSubview:_loopButton];
@@ -100,6 +101,7 @@
     [playbackCard.contentView addSubview:_displayCommentsButton];
     [playbackCard.contentView addSubview:_showFileListButton];
     [playbackCard.contentView addSubview:_moviesOnlyButton];
+    [playbackCard.contentView addSubview:_skipICloudFilesButton];
     [playbackCard.contentView addSubview:filenameLabel];
     [playbackCard.contentView addSubview:_filenameDisplayMatrix];
     [contentView addSubview:playbackCard];
@@ -246,6 +248,9 @@
 
     self.moviesOnlyButton = [NSButton checkboxWithTitle:@"Movies only" target:self.master action:@selector(setMoviesOnly:)];
     self.moviesOnlyButton.font = [NSFont systemFontOfSize:12];
+
+    self.skipICloudFilesButton = [NSButton checkboxWithTitle:@"Skip undownloaded iCloud files" target:self.master action:@selector(setSkipICloudFiles:)];
+    self.skipICloudFilesButton.font = [NSFont systemFontOfSize:12];
 
     self.filenameDisplayMatrix = [[NSMatrix alloc] initWithFrame:NSZeroRect
                                                            mode:NSRadioModeMatrix

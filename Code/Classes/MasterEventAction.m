@@ -11,10 +11,6 @@
 #import "SlideShow.h"
 #import "FileListPanel.h"
 
-//thanks to Tomas Zahradnicky, Jr. who wrote invalTrashContents
-static OSErr invalTrashContents(void);
-
-
 @implementation Master (MasterEventAction)
 
 - (EventAction)kbNextPic:(id)param {
@@ -47,35 +43,35 @@ static OSErr invalTrashContents(void);
 }
 
 - (EventAction)kbMoveToTrash:(id)param {
-    NSString* path=[myCurrentShow currentPath];
-    if (! [path length]) NSBeep();
-    else {
-        NSInteger unused;
-        NSWorkspace* space=[NSWorkspace sharedWorkspace];
-        if (! [space performFileOperation:NSWorkspaceRecycleOperation
-                                   source:[[path stringByDeletingLastPathComponent] stringByAppendingString:@"/"]
-                              destination:@""
-                                    files:[NSArray arrayWithObject:[path lastPathComponent]]
-                                      tag:&unused]) {
+    NSString* path = [myCurrentShow currentPath];
+    if (![path length]) {
+        NSBeep();
+    } else {
+        NSURL *fileURL = [NSURL fileURLWithPath:path];
+        NSError *error = nil;
+        if ([[NSFileManager defaultManager] trashItemAtURL:fileURL
+                                          resultingItemURL:nil
+                                                     error:&error]) {
+            [[NSSound soundNamed:@"trash"] play];
+        } else {
             NSBeep();
         }
-        else [[NSSound soundNamed:@"trash"] play];
-        invalTrashContents();
     }
     return eNext;
 }
 
 - (EventAction)kbMoveToFolder:(id)param {
-    NSString* path=[myCurrentShow currentPath];
-    if (! [path length]) NSBeep();
-    else {
-        NSInteger unused;
-        NSWorkspace* space=[NSWorkspace sharedWorkspace];
-        if (! [space performFileOperation:NSWorkspaceMoveOperation
-                                   source:[path stringByDeletingLastPathComponent]
-                              destination:param
-                                    files:[NSArray arrayWithObject:[path lastPathComponent]]
-                                      tag:&unused]) {
+    NSString* path = [myCurrentShow currentPath];
+    if (![path length]) {
+        NSBeep();
+    } else {
+        NSURL *sourceURL = [NSURL fileURLWithPath:path];
+        NSString *destPath = [param stringByAppendingPathComponent:[path lastPathComponent]];
+        NSURL *destURL = [NSURL fileURLWithPath:destPath];
+        NSError *error = nil;
+        if (![[NSFileManager defaultManager] moveItemAtURL:sourceURL
+                                                     toURL:destURL
+                                                     error:&error]) {
             NSBeep();
         }
     }
@@ -83,16 +79,17 @@ static OSErr invalTrashContents(void);
 }
 
 - (EventAction)kbCopyToFolder:(id)param {
-    NSString* path=[myCurrentShow currentPath];
-    if (! [path length]) NSBeep();
-    else {
-        NSInteger unused;
-        NSWorkspace* space=[NSWorkspace sharedWorkspace];
-        if (! [space performFileOperation:NSWorkspaceCopyOperation
-                                   source:[path stringByDeletingLastPathComponent]
-                              destination:param
-                                    files:[NSArray arrayWithObject:[path lastPathComponent]]
-                                      tag:&unused]) {
+    NSString* path = [myCurrentShow currentPath];
+    if (![path length]) {
+        NSBeep();
+    } else {
+        NSURL *sourceURL = [NSURL fileURLWithPath:path];
+        NSString *destPath = [param stringByAppendingPathComponent:[path lastPathComponent]];
+        NSURL *destURL = [NSURL fileURLWithPath:destPath];
+        NSError *error = nil;
+        if (![[NSFileManager defaultManager] copyItemAtURL:sourceURL
+                                                     toURL:destURL
+                                                     error:&error]) {
             NSBeep();
         }
     }
@@ -148,33 +145,3 @@ static OSErr invalTrashContents(void);
 }
 
 @end
-
-
-//thanks to Tomas Zahradnicky, Jr. who wrote invalTrashContents
-OSErr invalTrashContents(void) {
-    //  trash is located in ~/.Trash and this folder does not
-    //  exist if it is empty. If you call invalTrashContents
-    //  on trash with 0 files trash folder is attempted to be
-    //  deleted. If it exists, trash folder is invalidated
-    //  and finder views are updated.
-
-    OSStatus			err = 0;
-    FSRef			trashRef;
-    Boolean			isDirectory;
-    NSString			*trashpath	= @"~/.Trash";
-    NSString			*completepath;
-
-    completepath = [trashpath stringByExpandingTildeInPath];
-
-    err = FSPathMakeRef((const unsigned char*)[completepath UTF8String], &trashRef, &isDirectory);
-
-    if(err!=noErr || !isDirectory)
-    {
-        //  trash does not exist. don't do anything
-        return err;
-    }
-
-    err =FNNotify(&trashRef,kFNDirectoryModifiedMessage,kNilOptions);
-
-    return err;
-}

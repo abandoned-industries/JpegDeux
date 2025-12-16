@@ -273,8 +273,6 @@
     NSSize oldSize=[image size];
     NSSize newSize=[self displaySizeForSize:oldSize];
     [image setSize:newSize];
-    [image lockFocus];
-    [image unlockFocus];
 }
 
 - (void)preload {

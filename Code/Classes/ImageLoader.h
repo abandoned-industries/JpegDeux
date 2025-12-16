@@ -28,4 +28,11 @@
 // Get image dimensions without loading the full image
 + (NSSize)imageSizeForPath:(NSString *)path;
 
+// Check if file is downloaded (not an iCloud placeholder)
++ (BOOL)isFileDownloaded:(NSString *)path;
+
+// Setting to skip iCloud files (show placeholder if NO, skip if YES)
++ (void)setSkipICloudFiles:(BOOL)skip;
++ (BOOL)skipICloudFiles;
+
 @end

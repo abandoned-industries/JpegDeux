@@ -49,8 +49,7 @@
         NSSize newSize=[myImageView scaledSizeForSize:oldSize];
         if (! NSEqualSizes(newSize, oldSize)) {
             [myNextImage setSize:newSize];
-            [myNextImage lockFocus];
-            [myNextImage unlockFocus];
+            // Note: removed lockFocus/unlockFocus - unnecessary and blocks on large images
         }
     }
 }

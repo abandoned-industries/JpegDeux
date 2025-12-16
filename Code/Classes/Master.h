@@ -38,6 +38,7 @@ typedef enum {
     BOOL myShouldPrecache;
     BOOL myShouldShowFileList;
     BOOL myMoviesOnly;
+    BOOL myShouldSkipICloudFiles;
     FileNameDisplay myFileNameDisplay;
     NSMutableArray* myChosenFiles;
     SlideShow* myCurrentShow;
@@ -70,6 +71,7 @@ typedef enum {
     IBOutlet NSDrawer* myTransitionDrawer;
     IBOutlet NSButton* myShowFileListButton;
     IBOutlet NSButton* myMoviesOnlyButton;
+    IBOutlet NSButton* mySkipICloudFilesButton;
 }
 
 - (IBAction)selectFiles:(id)sender;
@@ -87,6 +89,7 @@ typedef enum {
 - (IBAction)setCommentDisplay:(id)sender;
 - (IBAction)setShowFileList:(id)sender;
 - (IBAction)setMoviesOnly:(id)sender;
+- (IBAction)setSkipICloudFiles:(id)sender;
 - (IBAction)begin:(id)sender;
 
 - (IBAction)sortName:(id)sender;
@@ -128,5 +131,12 @@ typedef enum {
 - (IBAction)displayImageInWindow:(id)sender;
 
 - (IBAction)closeWindow:(id)sender;
+
+// Slideshow menu actions
+- (IBAction)rotateImageCW:(id)sender;
+- (IBAction)rotateImageCCW:(id)sender;
+- (IBAction)flipImageH:(id)sender;
+- (IBAction)flipImageV:(id)sender;
+- (IBAction)moveImageToTrash:(id)sender;
 
 @end

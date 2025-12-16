@@ -18,10 +18,87 @@ static dispatch_queue_t imageLoadingQueue(void) {
     return queue;
 }
 
+// Global setting for skipping iCloud files (default YES)
+static BOOL sSkipICloudFiles = YES;
+
 @implementation ImageLoader
+
++ (void)setSkipICloudFiles:(BOOL)skip {
+    sSkipICloudFiles = skip;
+}
+
++ (BOOL)skipICloudFiles {
+    return sSkipICloudFiles;
+}
+
+// Create a placeholder image for files not yet downloaded from iCloud
++ (NSImage *)iCloudPlaceholderImageWithFilename:(NSString *)filename {
+    NSSize size = NSMakeSize(800, 600);
+    NSImage *image = [[NSImage alloc] initWithSize:size];
+
+    [image lockFocus];
+
+    // Dark background
+    [[NSColor colorWithWhite:0.15 alpha:1.0] set];
+    NSRectFill(NSMakeRect(0, 0, size.width, size.height));
+
+    // Draw iCloud icon (simple cloud shape using text)
+    NSMutableParagraphStyle *centerStyle = [[NSMutableParagraphStyle alloc] init];
+    [centerStyle setAlignment:NSTextAlignmentCenter];
+
+    // Cloud emoji as icon
+    NSDictionary *iconAttrs = @{
+        NSFontAttributeName: [NSFont systemFontOfSize:72],
+        NSForegroundColorAttributeName: [NSColor colorWithWhite:0.5 alpha:1.0],
+        NSParagraphStyleAttributeName: centerStyle
+    };
+    [@"\u2601" drawInRect:NSMakeRect(0, size.height/2 + 20, size.width, 100) withAttributes:iconAttrs];
+
+    // "Not Downloaded" text
+    NSDictionary *titleAttrs = @{
+        NSFontAttributeName: [NSFont systemFontOfSize:24 weight:NSFontWeightMedium],
+        NSForegroundColorAttributeName: [NSColor colorWithWhite:0.7 alpha:1.0],
+        NSParagraphStyleAttributeName: centerStyle
+    };
+    [@"iCloud File Not Downloaded" drawInRect:NSMakeRect(0, size.height/2 - 30, size.width, 40) withAttributes:titleAttrs];
+
+    // Filename
+    NSDictionary *filenameAttrs = @{
+        NSFontAttributeName: [NSFont systemFontOfSize:14],
+        NSForegroundColorAttributeName: [NSColor colorWithWhite:0.5 alpha:1.0],
+        NSParagraphStyleAttributeName: centerStyle
+    };
+    NSString *displayName = [filename lastPathComponent] ?: @"Unknown";
+    [displayName drawInRect:NSMakeRect(20, size.height/2 - 70, size.width - 40, 30) withAttributes:filenameAttrs];
+
+    [image unlockFocus];
+
+    return image;
+}
+
+// Check if file is available locally (not an iCloud placeholder waiting to download)
++ (BOOL)isFileDownloaded:(NSString *)path {
+    NSURL *url = [NSURL fileURLWithPath:path];
+    if (!url) return NO;
+
+    NSString *downloadStatus = nil;
+    NSError *error = nil;
+    [url getResourceValue:&downloadStatus forKey:NSURLUbiquitousItemDownloadingStatusKey error:&error];
+
+    // If not an iCloud file, downloadStatus will be nil - that's fine
+    if (!downloadStatus) return YES;
+
+    // Check if fully downloaded
+    return [downloadStatus isEqualToString:NSURLUbiquitousItemDownloadingStatusCurrent];
+}
 
 + (NSImage *)thumbnailForPath:(NSString *)path maxSize:(CGFloat)maxSize {
     if (!path) return nil;
+
+    // Skip iCloud files that aren't downloaded yet
+    if (![self isFileDownloaded:path]) {
+        return nil;
+    }
 
     NSURL *url = [NSURL fileURLWithPath:path];
     if (!url) return nil;
@@ -83,37 +160,26 @@ static dispatch_queue_t imageLoadingQueue(void) {
         return [[NSImage alloc] initWithContentsOfURL:url];
     }
 
-    // For local files, use CGImageSource for better memory efficiency
-    NSURL *url = [NSURL fileURLWithPath:path];
-    if (!url) return nil;
-
-    CGImageSourceRef source = CGImageSourceCreateWithURL((__bridge CFURLRef)url, NULL);
-    if (!source) {
-        // Fall back to NSImage
-        return [[NSImage alloc] initWithContentsOfFile:path];
+    // Handle iCloud files that aren't downloaded yet
+    if (![self isFileDownloaded:path]) {
+        if (sSkipICloudFiles) {
+            return nil;  // Skip - will advance to next image
+        } else {
+            return [self iCloudPlaceholderImageWithFilename:path];  // Show placeholder
+        }
     }
 
-    // Load with options for better performance
-    NSDictionary *options = @{
-        (id)kCGImageSourceShouldCacheImmediately: @NO,  // Don't cache the raw data
-        (id)kCGImageSourceCreateThumbnailWithTransform: @YES  // Apply EXIF orientation
-    };
-
-    CGImageRef cgImage = CGImageSourceCreateImageAtIndex(source, 0, (__bridge CFDictionaryRef)options);
-    CFRelease(source);
-
-    if (!cgImage) {
-        return [[NSImage alloc] initWithContentsOfFile:path];
-    }
-
-    NSImage *image = [[NSImage alloc] initWithCGImage:cgImage size:NSZeroSize];
-    CGImageRelease(cgImage);
-
-    return image;
+    // Use NSImage directly - it handles edge cases better than CGImageSource
+    return [[NSImage alloc] initWithContentsOfFile:path];
 }
 
 + (NSSize)imageSizeForPath:(NSString *)path {
     if (!path) return NSZeroSize;
+
+    // Skip iCloud files that aren't downloaded yet
+    if (![self isFileDownloaded:path]) {
+        return NSZeroSize;
+    }
 
     NSURL *url = [NSURL fileURLWithPath:path];
     if (!url) return NSZeroSize;
