@@ -760,13 +760,6 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
     else if (action==@selector(redo:)) {
         return [myUndoer canRedo];
     }
-    else if (action==@selector(rotateImageCW:) ||
-             action==@selector(rotateImageCCW:) ||
-             action==@selector(flipImageH:) ||
-             action==@selector(flipImageV:) ||
-             action==@selector(moveImageToTrash:)) {
-        return myCurrentShow != nil;
-    }
     else return YES;//[super validateMenuItem:menuItem];
 }
 
@@ -922,53 +915,6 @@ static NSMutableArray* unaliasIfNecessary(NSArray* array) {
 
 - (IBAction)closeWindow:(id)sender {
     [myWindow orderOut:self];
-}
-
-#pragma mark - Slideshow Menu Actions
-
-- (IBAction)rotateImageCW:(id)sender {
-    if (myCurrentShow) {
-        [myCurrentShow rotate:3];
-        [myCurrentShow redisplay];
-    }
-}
-
-- (IBAction)rotateImageCCW:(id)sender {
-    if (myCurrentShow) {
-        [myCurrentShow rotate:1];
-        [myCurrentShow redisplay];
-    }
-}
-
-- (IBAction)flipImageH:(id)sender {
-    if (myCurrentShow) {
-        [myCurrentShow flipHorizontal];
-        [myCurrentShow redisplay];
-    }
-}
-
-- (IBAction)flipImageV:(id)sender {
-    if (myCurrentShow) {
-        [myCurrentShow flipVertical];
-        [myCurrentShow redisplay];
-    }
-}
-
-- (IBAction)moveImageToTrash:(id)sender {
-    if (myCurrentShow) {
-        NSString* path = [myCurrentShow currentPath];
-        if ([path length]) {
-            NSURL *fileURL = [NSURL fileURLWithPath:path];
-            NSError *error = nil;
-            if ([[NSFileManager defaultManager] trashItemAtURL:fileURL
-                                              resultingItemURL:nil
-                                                         error:&error]) {
-                [[NSSound soundNamed:@"trash"] play];
-            } else {
-                NSBeep();
-            }
-        }
-    }
 }
 
 @end

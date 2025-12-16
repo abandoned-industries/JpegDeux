@@ -113,42 +113,6 @@
                                     <action selector="selectFiles:" target="194" id="576"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="1001">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Rotate Clockwise" keyEquivalent="r" id="1002">
-                                <connections>
-                                    <action selector="rotateImageCW:" target="194" id="1003"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Rotate Counter-Clockwise" keyEquivalent="R" id="1004">
-                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
-                                <connections>
-                                    <action selector="rotateImageCCW:" target="194" id="1005"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="1006">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Flip Horizontal" id="1007">
-                                <connections>
-                                    <action selector="flipImageH:" target="194" id="1008"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Flip Vertical" id="1009">
-                                <connections>
-                                    <action selector="flipImageV:" target="194" id="1010"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="1011">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Move to Trash" id="1012">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                                <connections>
-                                    <action selector="moveImageToTrash:" target="194" id="1013"/>
-                                </connections>
-                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>

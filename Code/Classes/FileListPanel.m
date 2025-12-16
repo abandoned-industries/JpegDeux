@@ -251,6 +251,7 @@ static NSMutableDictionary *videoValidationCache = nil;
             break;
         }
     }
+    [_tableView reloadData];
     [self highlightCurrentFile];
 }
 

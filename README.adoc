@@ -22,9 +22,7 @@ This is a modernized fork of JPEGDeux, updated for Apple Silicon and modern macO
 * Movies-only filter option
 * Customizable keybindings for slideshow control
 * Image sorting (by name, date modified, date created, or number)
-* Image rotation and flipping during slideshow
 * Hierarchical folder support with drag and drop
-* Move/copy images to folders during viewing
 * Custom background colors
 * Smart image caching for improved performance
 * High-quality image upscaling with trilinear filtering
@@ -92,7 +90,9 @@ The following legacy features were removed as they no longer work on modern macO
 * **Force Fit scaling option** - Removed from UI
 * **QuickTime-based shows** - Replaced with AVFoundation
 * **Direct Display show mode** - No longer supported
-* **Various non-functional menu items** - Cleaned up Slideshow menu
+* **Image rotation/flipping** - Keyboard shortcuts removed
+* **Move to Trash** - Keyboard shortcut removed
+* **Move/Copy to folder** - Keyboard shortcuts removed
 * **Deprecated preferences** - Removed non-working options
 
 === Bug Fixes

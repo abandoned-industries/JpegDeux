@@ -132,11 +132,4 @@ typedef enum {
 
 - (IBAction)closeWindow:(id)sender;
 
-// Slideshow menu actions
-- (IBAction)rotateImageCW:(id)sender;
-- (IBAction)rotateImageCCW:(id)sender;
-- (IBAction)flipImageH:(id)sender;
-- (IBAction)flipImageV:(id)sender;
-- (IBAction)moveImageToTrash:(id)sender;
-
 @end

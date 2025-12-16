@@ -23,13 +23,6 @@ NSString* displayers[]={
     @"Toggle auto-advance",
     @"Increase show speed",
     @"Decrease show speed",
-    @"Move to trash",
-    @"Move to folder...",
-    @"Copy to folder...",
-    @"Rotate 90\xC2\xB0",
-    @"Rotate 90\xC2\xB0 CW",
-    @"Flip horizontal",
-    @"Flip vertical",
     @"Toggle comment window",
     @"Toggle file list",
     @"Cycle filename display"
@@ -141,13 +134,6 @@ static NSString* displayStringForKey(unichar key) {
         selectors[i++]=SEL2STR(kbToggleAdvance:);
         selectors[i++]=SEL2STR(kbIncreaseSpeed:);
         selectors[i++]=SEL2STR(kbDecreaseSpeed:);
-        selectors[i++]=SEL2STR(kbMoveToTrash:);
-        selectors[i++]=SEL2STR(kbMoveToFolder:);
-        selectors[i++]=SEL2STR(kbCopyToFolder:);
-        selectors[i++]=SEL2STR(kbRotateCCW:);
-        selectors[i++]=SEL2STR(kbRotateCW:);
-        selectors[i++]=SEL2STR(kbFlipH:);
-        selectors[i++]=SEL2STR(kbFlipV:);
         selectors[i++]=SEL2STR(kbToggleComments:);
         selectors[i++]=SEL2STR(kbToggleFileList:);
         selectors[i++]=SEL2STR(kbCycleFilename:);
@@ -247,19 +233,6 @@ static NSString* displayStringForKey(unichar key) {
     KeyBinding* kb=[myKeyBindings objectAtIndex:row];
     if ([[column identifier] isEqualToString:@"action"]) {
         SEL newSel=NSSelectorFromString(selectors[[value intValue]]);
-        if (newSel == @selector(kbMoveToFolder:) || newSel == @selector(kbCopyToFolder:)) {
-            NSOpenPanel* panel=[NSOpenPanel openPanel];
-            NSInteger result;
-            
-            [panel setCanChooseFiles:NO];
-            [panel setCanChooseDirectories:YES];
-            [panel setResolvesAliases:YES];
-            result=[panel runModal];
-            if (result==NSModalResponseCancel) return;
-			NSURL *pathUrl = [panel URLs][0];
-            NSString *path=[pathUrl absoluteString];
-            kb->param=path;
-        }
         kb->action=newSel;
     }
 }
